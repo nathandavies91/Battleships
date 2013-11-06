@@ -27,6 +27,6 @@ jQuery(function($) {
     
     // Error gathering the user's media stream
     function error(error) {
-        console.log("navigator.getUserMedia error: ", error);
+        console.log('Error gathering the user\'s media stream: ', error);
     }
 });
