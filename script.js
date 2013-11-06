@@ -9,17 +9,12 @@ $(function() {
     
     // Supported?
     if (navigator.getUserMedia)
-        navigator.getUserMedia({ video: true, audio: true }, success, error);
+        navigator.getUserMedia({ video: true, audio: true }, success);
     else
         errorMessage.html('Your browser is not supported');
     
     // We've got the user's media stream
     function success() {
         $('body').addClass('js');
-    }
-    
-    // Error occurred
-    function error() {
-        //
     }
 });
