@@ -17,6 +17,6 @@ $(function() {
     
     // Error occurred
     function error() {
-        errorMessage.html('An error has occurred');
+        errorMessage.html('You need to enable video streaming');
     }
 });
