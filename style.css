@@ -29,9 +29,6 @@ h1 {
 #javascript {
     display: none;
 }
-.js #javascript {
-    display: block;
-}
 
 #message {
     background: red;
@@ -46,6 +43,11 @@ h1 {
 }
 #message .error {
     text-transform: lowercase;
+}
+
+/* JavaScript Enabled */
+.js #javascript {
+    display: block;
 }
 .js #message {
     display: none;
