@@ -22,7 +22,7 @@ jQuery(function($) {
         var video = $('video#local');
         
         window.stream = localStream;
-        video.attr({'src': window.URL.createObjectURL(localStream), 'autoplay': 'true'});
+        video.attr('src', window.URL.createObjectURL(localStream));
     }
     
     // Error gathering the user's media stream
