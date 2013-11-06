@@ -1,4 +1,4 @@
-$(function() {
+jQuery(function($) {
     // Variables
     var errorMessage = $('#message .error');
     
