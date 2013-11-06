@@ -1,6 +1,9 @@
 $(function() {
     var errorMessage = $('#message .error');
     
+    // Adjust the error message as to prevent confusion
+    errorMessage.html('You need to enable video streaming');
+    
     // Gather the user's media
     navigator.getUserMedia || (navigator.getUserMedia = navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia);
     
@@ -17,6 +20,6 @@ $(function() {
     
     // Error occurred
     function error() {
-        errorMessage.html('You need to enable video streaming');
+        //
     }
 });
