@@ -1,0 +1,54 @@
+/* Fonts */
+@font-face {
+    font-family: 'Share Tech Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Share Tech Mono'), local('ShareTechMono-Regular'), url('../fonts/ShareTechMono.woff') format('woff');
+}
+
+/* Styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #06737F;
+    color: white;
+    color: rgba(255, 255, 255, .85);
+    font-family: 'Share Tech Mono';
+    font-size: 16px;
+    text-shadow: .1em .1em rgba(50, 50, 50, .7);
+    text-transform: lowercase;
+}
+
+h1 {
+    font-size: 6em;
+    height: 110px;
+    left: 50%;
+    margin: -55px 0 0 -300px;
+    position: absolute;
+    text-align: center;
+    top: 25%;
+    width: 600px;
+}
+
+#message, #start {
+    background: red;
+    height: 30px;
+    left: 50%;
+    line-height: 30px;
+    margin: -25px 0 0 -155px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 290px;
+}
+
+#start {
+    cursor: pointer;
+    font-size: 1.5em;
+    margin-left: -75px;
+    width: 130px;
+}
