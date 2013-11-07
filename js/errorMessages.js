@@ -5,6 +5,7 @@
  */
 
 var ErrorMessages = {
+    browserSupport: 'This browser isn\'t supported',
     userMedia: 'Error retrieving camera &amp; audio',
     // Trace error messages
     Trace: {

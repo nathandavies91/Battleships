@@ -25,25 +25,36 @@ jQuery(function($) {
         // User's media shim
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
         
-        // Request for the user's media
-        navigator.getUserMedia({audio:true,video:true},
-            // We've got the user's stream
-            function(stream) {
-                // Peer
-                //
-                
-                // Show the game board
-                //
-            },
-            // Request rejected, or error occurred
-            function(error) {
-                // Log the error
-                Utilities.Trace.Error(ErrorMessages.Trace.userMedia+error.name);
-                
-                // Show error notification
-                start.remove();
-                message.html(ErrorMessages.userMedia).show();
-            }
-        );
+        // Supported browser?
+        if (navigator.getUserMedia) {
+            // Browser is supported, request for the user's media
+            navigator.getUserMedia({audio:true,video:true},
+                // We've got the user's stream
+                function(stream) {
+                    // Peer
+                    //
+                    
+                    // Show the game board
+                    //
+                },
+                // Request rejected, or error occurred
+                function(error) {
+                    // Log the error
+                    Utilities.Trace.Error(ErrorMessages.Trace.userMedia+error.name);
+                    
+                    // Show error notification
+                    start.remove();
+                    message.html(ErrorMessages.userMedia).show();
+                }
+            );
+        }
+        else {
+            // Browser isn't supported
+            Utilities.Trace.Error(ErrorMessages.browserSupport);
+            
+            // Show error notification
+            start.remove();
+            message.html(ErrorMessages.browserSupport).show();
+        }
     });
 });
