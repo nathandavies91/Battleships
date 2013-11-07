@@ -29,6 +29,7 @@ h1 {
     margin: -55px 0 0 -300px;
     position: absolute;
     text-align: center;
+    text-shadow: .05em .05em rgba(50, 50, 50, .7);
     top: 25%;
     width: 600px;
 }
