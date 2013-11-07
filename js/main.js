@@ -15,7 +15,7 @@ jQuery(function($) {
     
     // Initiate: hide JavaScript error, and show the start button
     message.hide();
-    start = $('<div id="start">Start</div>').insertAfter(message);
+    start = $(HTML.startButton).insertAfter(message);
     
     // Start the game initiation
     start.bind('click', function() {
