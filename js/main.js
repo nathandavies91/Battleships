@@ -9,6 +9,10 @@ jQuery(function($) {
     var message = $('#message'),
         start;
     
+    // Level of logging
+    if (!isNaN(Utilities.Parameters().log))
+        Utilities.Trace.level = Utilities.Parameters().log;
+    
     // Initiate: hide JavaScript error, and show the start button
     message.hide();
     start = $('<div id="start">Start</div>').insertAfter(message);
