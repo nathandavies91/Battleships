@@ -20,11 +20,21 @@ var Utilities = {
             this.loading = false;
         }
     },
+    // Parameters
+    Parameters: function() {
+        var query = document.location.search.split('+').join(' ');
+        var parameters = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
+        
+        while (tokens = re.exec(query))
+            parameters[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        
+        return parameters;
+    },
     // Trace
     Trace: {
         level: 0,
         Error: function(error) {
-            if (this.level) console.log('ERROR: '+error);
+            if (this.level > 0) console.log('ERROR: '+error);
         }
     }
 }
