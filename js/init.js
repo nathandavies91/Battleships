@@ -1,5 +1,5 @@
 /**
- * main.js
+ * init.js
  * -------
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
@@ -49,9 +49,10 @@ jQuery(function($) {
             if (navigator.getUserMedia) {
                 // Browser is supported, request for the user's media
                 navigator.getUserMedia({audio:true,video:true},
-                   // We've got the user's stream
+                   // We've got the user's stream, let's play!
                    function(stream) {
-                       Loader.Stop;
+                       Loader.Stop();
+                       new Game();
                    },
                    // Request rejected, or error occurred
                    function(error) {

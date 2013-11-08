@@ -54,7 +54,7 @@ var Utilities = {
         }
     },
     
-    // URL Parameters
+    // URL parameters
     URLParameters: function() {
         var query = document.location.search.split('+').join(' ');
         var parameters = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
