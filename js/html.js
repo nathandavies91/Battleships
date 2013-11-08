@@ -5,8 +5,8 @@
  */
 
 var HTML = {
-    loader: '<div id="loader">.</div>',
-    startButton: '<div id="start">Start</div>',
+    div: '<div id="{{id}}">{{content}}</div>',
+    
     GameBoard: function() { 
         var template = '';
         template += '<section id="{{id}}" class="board">';

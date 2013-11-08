@@ -13,7 +13,7 @@ function GameBoard(player) {
         grid[i] = Array(10);
     
     $('#'+player).remove();
-    $('body').append(Mustache.to_html(HTML.GameBoard(), {
+    $('body').append(Mustache.render(HTML.GameBoard(), {
         id: player,
         stream: (player == 'local') ? MediaStream.local : MediaStream.remote,
         grid: grid

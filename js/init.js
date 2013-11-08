@@ -15,7 +15,7 @@ jQuery(function($) {
     
     // Initiate: hide JavaScript error, and show the start button
     message.hide();
-    start = $(HTML.startButton).insertAfter(message);
+    start = $(Mustache.render(HTML.div,{id:'start',content:'Start'})).insertAfter(message);
     
     // Game initiation
     start.bind('click', function() {

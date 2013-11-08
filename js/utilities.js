@@ -14,12 +14,12 @@ var Utilities = {
     
     // Loading indicator
     Loader: {
-        id: '#loader',
+        id: 'loader',
         timeout: null,
         Start: function(o) {
             if (!o) {
-                $('body').append(HTML.loader);
-                o = $(this.id);
+                $('body').append(Mustache.render(HTML.div,{id:this.id,content:'.'}));
+                o = $('#'+this.id);
             }
             else if (o.html().length >= 5)
                 o.html('.');
@@ -31,7 +31,7 @@ var Utilities = {
         },
         Stop: function() {
             clearTimeout(this.timeout);
-            $(this.id).remove();
+            $('#'+this.id).remove();
         }
     },
     
