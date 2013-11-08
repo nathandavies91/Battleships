@@ -14,12 +14,12 @@ var Utilities = {
     
     // Loading indicator
     Loader: {
-        loading: false,
+        id: '#loader',
+        timeout: null,
         Start: function(o) {
             if (!o) {
                 $('body').append(HTML.loader);
-                o = $('#loader');
-                this.loading = true;
+                o = $(this.id);
             }
             else if (o.html().length >= 5)
                 o.html('.');
@@ -27,13 +27,11 @@ var Utilities = {
                 o.append('.');
             
             // Call again in .5s
-            if (this.loading)
-                setTimeout(function() { Utilities.Loader.Start(o); }, 500);
-            else
-                o.remove();
+            this.timeout = setTimeout(function() { Utilities.Loader.Start(o); }, 500);
         },
         Stop: function() {
-            this.loading = false;
+            clearTimeout(this.timeout);
+            $(this.id).remove();
         }
     },
     
