@@ -8,7 +8,7 @@ var Utilities = {
     // Error messages
     ErrorMessages: {
         browserSupport: 'This browser isn\'t supported',
-        peerConnection: 'Error establishing a peer connection',
+        peerConnection: 'Technical difficulties =(',
         userMedia: 'Error retrieving camera &amp; audio'
     },
     
