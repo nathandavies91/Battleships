@@ -38,7 +38,7 @@ h1 {
     width: 600px;
 }
 
-#message, #start {
+#loader, #message, #start {
     background: red;
     height: 30px;
     left: 50%;
@@ -50,13 +50,15 @@ h1 {
     top: 50%;
     width: 290px;
 }
-
-#start {
-    cursor: pointer;
+#loader, #start {
     font-size: 1.5em;
     margin-left: -75px;
     width: 130px;
 }
-#start.loading {
+#loader {
     background: none;
+}
+
+#start {
+    cursor: pointer;
 }

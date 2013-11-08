@@ -5,5 +5,6 @@
  */
 
 var HTML = {
+    loader: '<div id="loader">.</div>',
     startButton: '<div id="start">Start</div>'
 }

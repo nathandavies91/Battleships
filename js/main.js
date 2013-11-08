@@ -5,56 +5,76 @@
  */
 
 jQuery(function($) {
-    // Variables
+    // Elements
     var message = $('#message'),
         start;
     
     // Level of logging
-    if (!isNaN(Utilities.Parameters().log))
-        Utilities.Trace.level = Utilities.Parameters().log;
+    if (!isNaN(URLParameters.log))
+        Utilities.Trace.level = URLParameters.log;
     
     // Initiate: hide JavaScript error, and show the start button
     message.hide();
     start = $(HTML.startButton).insertAfter(message);
     
-    // Start the game initiation
+    // Game initiation
     start.bind('click', function() {
+        // Remove the start button
+        $(this).remove();
+        
         // Loading indicator
-        Utilities.Loading.Start($(this), true);
+        Loader.Start();
         
-        // User's media shim
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        
-        // Supported browser?
-        if (navigator.getUserMedia) {
-            // Browser is supported, request for the user's media
-            navigator.getUserMedia({audio:true,video:true},
-                // We've got the user's stream
-                function(stream) {
-                    // Peer
-                    //
-                    
-                    // Show the game board
-                    //
-                },
-                // Request rejected, or error occurred
-                function(error) {
-                    // Log the error
-                    Utilities.Trace.Error(ErrorMessages.Trace.userMedia+error.name);
-                    
-                    // Show error notification
-                    start.remove();
-                    message.html(ErrorMessages.userMedia).show();
-                }
-            );
-        }
-        else {
-            // Browser isn't supported
-            Utilities.Trace.Error(ErrorMessages.browserSupport);
+        // Peers
+        PeerHandler.peer = new Peer({host: 'peer.nathandavies.co.uk'});
+        PeerHandler.peer.on('open', function(id) {
+            Trace.Information('Local peer identifier: '+id);
             
-            // Show error notification
-            start.remove();
-            message.html(ErrorMessages.browserSupport).show();
-        }
+            // Connect to hosting peer?
+            if (URLParameters.session) {
+                PeerHandler.connection = PeerHandler.peer.connect(URLParameters.session);
+                Trace.Information('Connected to peer: '+PeerHandler.connection.peer);
+                
+                //
+                //
+                // waiting for user to accept media
+                //
+                //
+            }
+            
+            // User's media shim
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            
+            // Supported browser?
+            if (navigator.getUserMedia) {
+                // Browser is supported, request for the user's media
+                navigator.getUserMedia({audio:true,video:true},
+                   // We've got the user's stream
+                   function(stream) {
+                       Loader.Stop;
+                   },
+                   // Request rejected, or error occurred
+                   function(error) {
+                       showError(ErrorMessages.userMedia, 'Error retrieving the user\'s media feed: '+error.name);
+                   }
+               );
+            }
+            else {
+                // Browser isn't supported
+                showError(ErrorMessages.browserSupport);
+            }
+        }).on('error', function(error) {
+            // Error occurred
+            showError(ErrorMessages.peerConnection, 'Error creating the peer connection'+error.type);
+        });
     });
+    
+    function showError(error, trace) {
+        // Trace error
+        Trace.Error((!trace) ? error : trace);
+        
+        // Remove the loader, and display the error
+        Loader.Stop();
+        message.html(error).show();
+    }
 });
