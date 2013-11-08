@@ -26,14 +26,14 @@ jQuery(function($) {
         Loader.Start();
         
         // Peers
-        PeerHandler.peer = new Peer({host:'peer.nathandavies.co.uk',port:80});
+        PeerHandler.peer = new Peer({host:'peer.nathandavies.co.uk'});
         PeerHandler.peer.on('open', function(id) {
             Trace.Information('Local peer identifier: '+id);
             
             // Connect to hosting peer?
             if (URLParameters.session) {
                 PeerHandler.connection = PeerHandler.peer.connect(URLParameters.session);
-                Trace.Information('Connected to peer: '+PeerHandler.connection.peer);
+                Trace.Information('Connecting to peer: '+PeerHandler.connection.peer);
                 
                 //
                 //
@@ -66,7 +66,7 @@ jQuery(function($) {
             }
         }).on('error', function(error) {
             // Error occurred
-            showError(ErrorMessages.peerConnection, 'Error creating the peer connection'+error.type);
+            showError(ErrorMessages.peerConnection, 'Error creating the peer connection; '+error.type);
         });
     });
     
