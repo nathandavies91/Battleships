@@ -7,10 +7,8 @@
 function Game() {
     Trace.Information('New Game()');
     
-    // Variables
-    var localGameBoard;
-    
     // Show the local player's game board
     $('h1').hide();
-    localGameBoard = new GameBoard('local');
+    new GameBoard('local');
+    new GameBoard('remote'); // TESTING
 }
