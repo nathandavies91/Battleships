@@ -94,9 +94,6 @@ h1 {
     height: 50px;
     width: 50px;
 }
-.board .grid .row .block:hover {
-    background: green;
-}
 
 /* Remote Board */
 #remote.board {
