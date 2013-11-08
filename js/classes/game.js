@@ -1,11 +1,15 @@
 /**
- * game.js
+ * Game.js
  * --------
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
 function Game() {
-    // new game instance -> draw board
+    Trace.Information('New Game()');
+    
+    // Show the local player's game board
+    $('h1').hide();
+    new GameBoard('local');
     
     // show peer sharing options; unless already in a party of 2
     

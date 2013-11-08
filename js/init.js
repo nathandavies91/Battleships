@@ -52,6 +52,12 @@ jQuery(function($) {
                    // We've got the user's stream, let's play!
                    function(stream) {
                        Loader.Stop();
+                       
+                       // Store the local stream
+                       Trace.Information('Granted access to the user\'s media');
+                       MediaStream.local = window.URL.createObjectURL(stream);
+                       
+                       // New game
                        new Game();
                    },
                    // Request rejected, or error occurred

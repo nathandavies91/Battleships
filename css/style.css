@@ -62,3 +62,45 @@ h1 {
 #start {
     cursor: pointer;
 }
+
+/* Board Styles */
+.board {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+}
+
+.board aside {
+    background: white;
+    border-right: 3px solid #51C0C0;
+    float: left;
+    margin: 1em 1em 0 0;
+    overflow: hidden;
+    padding: .4em;
+    width: 150px;
+}
+.board aside video {
+    background: #666;
+    box-shadow: inset 0 0 20px #333;
+    float: right;
+    height: 98px;
+    width: 128px;
+}
+
+.board .grid .row .block {
+    background: red;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+.board .grid .row .block:hover {
+    background: green;
+}
+
+/* Remote Board */
+#remote.board {
+    background: rgba(0, 0, 0, .2);
+    left: auto;
+    right: 0;
+}

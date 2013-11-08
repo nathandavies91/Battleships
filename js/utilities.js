@@ -35,6 +35,12 @@ var Utilities = {
         }
     },
     
+    // Media stream
+    MediaStream: {
+        local: null,
+        remote: null
+    },
+    
     // Peer handler
     PeerHandler: {
         connection: null,
@@ -67,6 +73,7 @@ var Utilities = {
 // Shorthands
 var ErrorMessages = Utilities.ErrorMessages,
     Loader = Utilities.Loader,
+    MediaStream = Utilities.MediaStream,
     PeerHandler = Utilities.PeerHandler,
     Trace = Utilities.Trace,
     URLParameters = Utilities.URLParameters();
