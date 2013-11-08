@@ -26,7 +26,7 @@ jQuery(function($) {
         Loader.Start();
         
         // Peers
-        PeerHandler.peer = new Peer({host: 'peer.nathandavies.co.uk'});
+        PeerHandler.peer = new Peer({host:'peer.nathandavies.co.uk',port:80});
         PeerHandler.peer.on('open', function(id) {
             Trace.Information('Local peer identifier: '+id);
             
