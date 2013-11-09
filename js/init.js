@@ -62,7 +62,14 @@ jQuery(function($) {
                    },
                    // Request rejected, or error occurred
                    function(error) {
-                       showError(ErrorMessages.userMedia, 'Error retrieving the user\'s media feed: '+error.name);
+                       // Damn! Oh well, just give the user a smiley face
+                       if (error.name == 'PERMISSION_DENIED') {
+                           Trace.Information('User denied use of their media');
+                           Loader.Stop();
+                           new Game();
+                       }
+                       else
+                           showError(ErrorMessages.userMedia, 'Error retrieving the user\'s media feed: '+error.name);
                    }
                );
             }
