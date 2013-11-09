@@ -73,7 +73,7 @@ h1 {
 
 .board aside {
     background: white;
-    border-right: 4px solid #51C0C0;
+    border-right: 4px solid #0B0;
     float: left;
     margin: 1em 1em 1em 0;
     overflow: hidden;
@@ -88,11 +88,26 @@ h1 {
     width: 200px;
 }
 
+.board .grid {
+    overflow: hidden;
+}
+
+.board .grid .row {
+    line-height: 0;
+}
+
 .board .grid .row .block {
-    background: red;
+    border-left: 1px dashed white;
+    border-top: 1px dashed white;
     display: inline-block;
-    height: 70px;
-    width: 70px;
+    height: 64px;
+    width: 64px;
+}
+.board .grid .row .block:last-child {
+    border-right: 1px dashed white;
+}
+.board .grid .row:last-child .block {
+    border-bottom: 1px dashed white;
 }
 
 /* Remote Board */
