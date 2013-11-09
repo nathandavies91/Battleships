@@ -103,17 +103,17 @@ h1 {
 }
 
 .board .grid .row .block {
-    border-left: 1px dashed white;
-    border-top: 1px dashed white;
+    border-left: 1px dashed #9AE2E2;
+    border-top: 1px dashed #9AE2E2;
     display: inline-block;
     height: 42px;
     width: 42px;
 }
 .board .grid .row .block:last-child {
-    border-right: 1px dashed white;
+    border-right: 1px dashed #9AE2E2;
 }
 .board .grid .row:last-child .block {
-    border-bottom: 1px dashed white;
+    border-bottom: 1px dashed #9AE2E2;
 }
 
 /* Remote Board */
