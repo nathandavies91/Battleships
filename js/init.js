@@ -34,24 +34,30 @@ jQuery(function($) {
             if (URLParameters.session) {
                 PeerHandler.connection = PeerHandler.peer.connect(URLParameters.session);
                 Trace.Information('Connecting to peer: '+PeerHandler.connection.peer);
+                
+                PeerHandler.connection.on('open', PlayGame);
             }
-            
-            // Play the game
-            Loader.Stop();
-            new Game();
+            else
+                PlayGame();
         }).on('error', function(error) {
             // Error occurred
-            showError(ErrorMessages.peerConnection, 'Error creating the peer connection; '+error.type);
+            ShowError(ErrorMessages.peerConnection, 'Error establishing a peer connection; '+error.type);
         });
     });
     
     // Show error
-    function showError(error, trace) {
+    function ShowError(error, trace) {
         // Trace error
         Trace.Error((!trace) ? error : trace);
         
         // Remove the loader, and display the error
         Loader.Stop();
         message.html(error).show();
+    }
+    
+    // Play the game
+    function PlayGame() {
+        Loader.Stop();
+        new Game();
     }
 });
