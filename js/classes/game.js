@@ -7,8 +7,19 @@
 function Game() {
     Trace.Information('New Game()');
     
+    // User's media
+    this.localMediaStream = new LocalMediaStream();
+    
     // Show the local player's game board
-    $('h1').hide();
-    new GameBoard('local');
-    new GameBoard('remote'); // TESTING
+    this.LocalGameBoard();
+}
+
+Game.prototype = {
+    localMediaStream: null,
+    
+    // Show local game board
+    LocalGameBoard: function() {
+        $('h1').hide();
+        new GameBoard({id:'local'});
+    }
 }

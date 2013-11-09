@@ -34,55 +34,18 @@ jQuery(function($) {
             if (URLParameters.session) {
                 PeerHandler.connection = PeerHandler.peer.connect(URLParameters.session);
                 Trace.Information('Connecting to peer: '+PeerHandler.connection.peer);
-                
-                //
-                //
-                // waiting for user to accept media
-                //
-                //
             }
             
-            // User's media shim
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-            
-            // Supported browser?
-            if (navigator.getUserMedia) {
-                // Browser is supported, request for the user's media
-                navigator.getUserMedia({audio:true,video:true},
-                   // We've got the user's stream, let's play!
-                   function(stream) {
-                       Loader.Stop();
-                       
-                       // Store the local stream
-                       Trace.Information('Granted access to the user\'s media');
-                       MediaStream.local = window.URL.createObjectURL(stream);
-                       
-                       // New game
-                       new Game();
-                   },
-                   // Request rejected, or error occurred
-                   function(error) {
-                       // Damn! Oh well, just give the user a smiley face
-                       if (error.name == 'PERMISSION_DENIED') {
-                           Trace.Information('User denied use of their media');
-                           Loader.Stop();
-                           new Game();
-                       }
-                       else
-                           showError(ErrorMessages.userMedia, 'Error retrieving the user\'s media feed: '+error.name);
-                   }
-               );
-            }
-            else {
-                // Browser isn't supported
-                showError(ErrorMessages.browserSupport);
-            }
+            // Play the game
+            Loader.Stop();
+            new Game();
         }).on('error', function(error) {
             // Error occurred
             showError(ErrorMessages.peerConnection, 'Error creating the peer connection; '+error.type);
         });
     });
     
+    // Show error
     function showError(error, trace) {
         // Trace error
         Trace.Error((!trace) ? error : trace);
