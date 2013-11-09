@@ -89,7 +89,13 @@ h1 {
 }
 
 .board .grid {
+    height: 651px;
+    left: 50%;
+    margin: -326px 0 0 -218px;
     overflow: hidden;
+    position: absolute;
+    top: 50%;
+    width: 651px;
 }
 
 .board .grid .row {
@@ -122,4 +128,11 @@ h1 {
     border-right: 0;
     float: right;
     margin: 1em 0 1em 1em;
+}
+
+#remote.board .grid {
+    left: auto;
+    margin-left: 0;
+    margin-right: -218px;
+    right: 50%;
 }

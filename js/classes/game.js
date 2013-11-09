@@ -12,6 +12,11 @@ function Game() {
     
     // Show the local player's game board
     this.LocalGameBoard();
+    
+    
+    
+    // TESTING
+    this.RemoteGameBoard();
 }
 
 Game.prototype = {
@@ -21,5 +26,9 @@ Game.prototype = {
     LocalGameBoard: function() {
         $('h1').hide();
         new GameBoard({id:'local'});
+    },
+    // Show remote game board
+    RemoteGameBoard: function() {
+        new GameBoard({id:'remote'});
     }
 }
