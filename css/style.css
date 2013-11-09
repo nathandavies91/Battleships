@@ -73,19 +73,19 @@ h1 {
 
 .board aside {
     background: white;
-    border-right: 3px solid #51C0C0;
+    border-right: 4px solid #51C0C0;
     float: left;
     margin: 1em 1em 1em 0;
     overflow: hidden;
     padding: .4em;
-    width: 150px;
+    width: 200px;
 }
 .board aside video {
-    background: #666;
+    background: #666 url('../images/no-video.png') no-repeat center;
     box-shadow: inset 0 0 20px #333;
     float: right;
-    height: 114px;
-    width: 150px;
+    height: 149px;
+    width: 200px;
 }
 
 .board .grid .row .block {
@@ -103,7 +103,7 @@ h1 {
 }
 
 #remote.board aside {
-    border-left: 3px solid red;
+    border-left: 4px solid red;
     border-right: 0;
     float: right;
     margin: 1em 0 1em 1em;
