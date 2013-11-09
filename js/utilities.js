@@ -9,6 +9,7 @@ var Utilities = {
     ErrorMessages: {
         browserSupport: 'This browser isn\'t supported',
         peerConnection: 'Technical difficulties =(',
+        peerUnavailable: 'Session no longer exists',
         userMedia: 'Error retrieving camera &amp; audio'
     },
     

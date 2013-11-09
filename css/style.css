@@ -39,7 +39,7 @@ h1 {
     width: 600px;
 }
 
-#loader, #message, #start {
+#loader, #message, #newsession, #start {
     background: red;
     height: 30px;
     left: 50%;
@@ -56,8 +56,13 @@ h1 {
     margin-left: -75px;
     width: 130px;
 }
-#loader {
+#loader, #newsession {
     background: none;
+}
+
+#newsession {
+    cursor: pointer;
+    margin-top: 42px;
 }
 
 #start {
