@@ -5,6 +5,8 @@
  */
 
 function LocalMediaStream() {
+    Trace.Information('New LocalMediaStream()');
+    
     // Is the browser supported?
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (navigator.getUserMedia) {
@@ -26,9 +28,13 @@ function LocalMediaStream() {
 
 LocalMediaStream.prototype = {
     stream: null,
+    
+    // Display the stream
     Display: function() {
         $('#local video').attr('src', this.ObjectURL());
     },
+    
+    // Object URL
     ObjectURL: function() {
         return window.URL.createObjectURL(this.stream);
     }

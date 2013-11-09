@@ -22,6 +22,7 @@ body {
     color: rgba(255, 255, 255, .85);
     font-family: 'Share Tech Mono';
     font-size: 16px;
+    overflow: hidden;
     text-shadow: .1em .1em rgba(50, 50, 50, .7);
     text-transform: lowercase;
 }
@@ -75,7 +76,6 @@ h1 {
     background: white;
     border-right: 4px solid #0B0;
     float: left;
-    margin: 1em 1em 1em 0;
     overflow: hidden;
     padding: .4em;
     width: 200px;
@@ -89,13 +89,13 @@ h1 {
 }
 
 .board .grid {
-    height: 651px;
+    height: 433px;
     left: 50%;
-    margin: -326px 0 0 -218px;
+    margin: -135px 0 0 -216px;
     overflow: hidden;
     position: absolute;
     top: 50%;
-    width: 651px;
+    width: 433px;
 }
 
 .board .grid .row {
@@ -106,8 +106,8 @@ h1 {
     border-left: 1px dashed white;
     border-top: 1px dashed white;
     display: inline-block;
-    height: 64px;
-    width: 64px;
+    height: 42px;
+    width: 42px;
 }
 .board .grid .row .block:last-child {
     border-right: 1px dashed white;
@@ -127,12 +127,4 @@ h1 {
     border-left: 4px solid red;
     border-right: 0;
     float: right;
-    margin: 1em 0 1em 1em;
-}
-
-#remote.board .grid {
-    left: auto;
-    margin-left: 0;
-    margin-right: -218px;
-    right: 50%;
 }

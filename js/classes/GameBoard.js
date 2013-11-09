@@ -5,7 +5,7 @@
  */
 
 function GameBoard(o) {
-    Trace.Information('New GameBoard('+o+')');
+    Trace.Information('New GameBoard('+o.id+')');
     
     // Grid
     var grid = Array(10);
