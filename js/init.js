@@ -45,6 +45,10 @@ jQuery(function($) {
         });
     });
     
+    // If a session identifier has been supplied, auto-start the initiation
+    if (URLParameters.session)
+        start.trigger('click');
+    
     // Show error
     function ShowError(error, trace) {
         // Trace error
