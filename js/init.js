@@ -14,6 +14,9 @@ jQuery(function($) {
     if (!isNaN(URLParameters.log))
         Utilities.Trace.level = URLParameters.log;
     
+    // Remove body scripts
+    $('body script').remove();
+    
     // Initiate the game
     function InitiateGame(bypassHost) {
         // Remove the start button
