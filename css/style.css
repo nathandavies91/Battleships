@@ -110,7 +110,7 @@ h1 {
     border-right: 4px solid #0B0;
     float: left;
     overflow: hidden;
-    padding: .4em;
+    padding: 6px;
     width: 200px;
 }
 .board aside video {
