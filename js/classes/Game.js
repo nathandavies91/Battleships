@@ -8,14 +8,11 @@ function Game() {
     Trace.Information('New Game()');
     
     // Required resources
-    this.gridController = new GridController();
+    Game.prototype.gridController = new GridController();
     this.localMediaStream = new LocalMediaStream();
     
     // Responsive grid
-    $(window).on('resize', function() {
-        // Nasty work around, JavaScript wouldn't let me just call gridController.Resize();
-        new GridController(true).Resize();
-    });
+    $(window).on('resize', function() { Game.prototype.gridController.Resize(); });
     
     // Show the local player's game board
     this.LocalGameBoard();
