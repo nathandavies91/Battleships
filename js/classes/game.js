@@ -33,6 +33,8 @@ Game.prototype = {
     // Show local game board
     LocalGameBoard: function() {
         $('h1').hide();
+        $('#message').remove();
+        
         new GameBoard({id:'local'});
         this.gridController.Resize();
     },

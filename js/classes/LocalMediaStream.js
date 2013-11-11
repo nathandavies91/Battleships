@@ -10,6 +10,9 @@ function LocalMediaStream() {
     // Is the browser supported?
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (navigator.getUserMedia) {
+        // Show hint
+        LocalMediaStream.prototype.hint = new Hint('mediaallow', 'Allow camera and microphone for video communication');
+        
         // Browser is supported, request for the user's media
         navigator.getUserMedia({audio:true,video:true},
            function(stream) {
@@ -17,16 +20,21 @@ function LocalMediaStream() {
                Trace.Information('Granted access to the user\'s media');
                LocalMediaStream.prototype.stream = stream;
                LocalMediaStream.prototype.Display();
+               
+               // Hide the hint
+               LocalMediaStream.prototype.hint.Remove();
            },
            function(error) {
                // Damn! Oh well, just give the user a smiley face
                Trace.Error('Error gathering user\'s media stream: '+error.name);
+               LocalMediaStream.prototype.hint.Remove();
            }
        );
     }
 }
 
 LocalMediaStream.prototype = {
+    hint: null,
     stream: null,
     
     // Display the stream

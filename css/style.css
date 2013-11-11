@@ -6,7 +6,8 @@
     src: local('Share Tech Mono'), local('ShareTechMono-Regular'), url('../fonts/ShareTechMono.woff') format('woff');
 }
 
-/* Styles */
+
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -39,6 +40,32 @@ h1 {
     width: 600px;
 }
 
+.hint {
+    background: red no-repeat 8px center;
+    box-shadow: 0 0 .4em #333;
+    cursor: pointer;
+    max-width: 245px;
+    opacity: .95;
+    padding: 8px;
+    position: absolute;
+    z-index: 9999;
+}
+.hint#mediaallow {
+    background-image: url('../images/camera.png');
+    padding-left: 72px;
+    right: 34px;
+    top: 20px;
+}
+.hint .pointer {
+    background: red;
+    border-radius: 6px;
+    height: 12px;
+    position: absolute;
+    right: 20px;
+    top: -6px;
+    width: 12px;
+}
+
 #loader, #message, #newsession, #start {
     background: red;
     height: 30px;
@@ -68,6 +95,7 @@ h1 {
 #start {
     cursor: pointer;
 }
+
 
 /* Board Styles */
 .board {

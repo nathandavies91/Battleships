@@ -5,13 +5,13 @@
  */
 
 var HTML = {
-    div: '<div id="{{id}}">{{content}}</div>',
+    div: '<div{{#id}} id="{{id}}"{{/id}}{{#class}} class="{{class}}"{{/class}}>{{content}}</div>',
     
     GameBoard: function() { 
         var template = '';
         template += '<section id="{{id}}" class="board">';
         template +=     '<aside>';
-        template +=         '<video src="{{stream}}" autoplay></video>';
+        template +=         '<video{{#stream}} src="{{stream}}"{{/stream}} autoplay></video>';
         template +=     '</aside>';
         template +=     '<section class="grid">';
         template +=         '{{#grid}}<div class="row">{{#.}}<div class="block"></div>{{/.}}</div>{{/grid}}';

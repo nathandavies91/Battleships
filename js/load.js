@@ -16,8 +16,9 @@ load('html');
 load('utilities');
         
 // Classes
-load('classes/GridController');
+load('classes/Hint');
 load('classes/LocalMediaStream');
+load('classes/GridController');
 load('classes/GameBoard');
 load('classes/Game');
         
