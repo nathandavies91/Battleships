@@ -17,10 +17,11 @@ function Game() {
     // Show the local player's game board
     this.LocalGameBoard();
     
-    
-    
-    // TESTING
-    this.RemoteGameBoard();
+    // Show an invite screen, unless already in a lobby
+    if (!PeerHandler.connection)
+        $('body').append(Mustache.render(HTML.InviteScreen(),{peer: PeerHandler.peer.id}));
+    else
+        this.RemoteGameBoard();
 }
 
 Game.prototype = {

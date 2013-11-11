@@ -43,6 +43,7 @@ jQuery(function($) {
             // Invalid peer?
             if (!error.type) {
                 ShowError(ErrorMessages.peerUnavailable);
+                PeerHandler.connection = null;
                 
                 // New session
                 newSession = $(Mustache.render(HTML.div,{id:'newsession',content:'+ New session'})).insertAfter(message);

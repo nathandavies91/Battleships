@@ -7,6 +7,7 @@
 var HTML = {
     div: '<div{{#id}} id="{{id}}"{{/id}}{{#class}} class="{{class}}"{{/class}}>{{content}}</div>',
     
+    // Game board
     GameBoard: function() { 
         var template = '';
         template += '<section id="{{id}}" class="board">';
@@ -16,6 +17,15 @@ var HTML = {
         template +=     '<section class="grid">';
         template +=         '{{#grid}}<div class="row">{{#.}}<div class="block"></div>{{/.}}</div>{{/grid}}';
         template +=     '</section>';
+        template += '</section>';
+        return template;
+    },
+    
+    // Invite screen
+    InviteScreen: function() {
+        var template = '';
+        template += '<section id="remote" class="board">';
+        template +=     '{{peer}}';
         template += '</section>';
         return template;
     }
