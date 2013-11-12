@@ -34,6 +34,16 @@ function Game() {
     }
     else
         this.RemoteGameBoard();
+    
+    // Peer connection
+    PeerHandler.peer.on('connection', function(connection) {
+        // Store the connection
+        PeerHandler.connect = connection;
+        Trace.Information('Peer has connected: '+PeerHandler.connect.id);
+        
+        // Show the other player's game board
+        Game.prototype.RemoteGameBoard();
+    });
 }
 
 Game.prototype = {
