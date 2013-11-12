@@ -18,8 +18,11 @@ function Game() {
     this.LocalGameBoard();
     
     // Show an invite screen, unless already in a lobby
-    if (!PeerHandler.connection)
-        $('body').append(Mustache.render(HTML.InviteScreen(),{peer: PeerHandler.peer.id}));
+    if (!PeerHandler.connection) {
+        $('body').append(Mustache.render(HTML.InviteScreen(), {
+            session: Location.url + '?session=' + PeerHandler.peer.id
+        }));
+    }
     else
         this.RemoteGameBoard();
 }

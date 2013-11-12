@@ -10,6 +10,7 @@
 /* General Styles */
 * {
     margin: 0;
+    outline: none;
     padding: 0;
 }
 
@@ -17,15 +18,17 @@
 	background: rgba(0,0,0,0);
 }
 
-body {
-    background: #06737F;
+body, input, button {
     color: white;
     color: rgba(255, 255, 255, .85);
     font-family: 'Share Tech Mono';
     font-size: 16px;
-    overflow: hidden;
     text-shadow: .1em .1em rgba(50, 50, 50, .7);
     text-transform: lowercase;
+}
+body {
+    background: #06737F;
+    overflow: hidden;
 }
 
 h1 {
@@ -38,6 +41,10 @@ h1 {
     text-shadow: .05em .05em rgba(50, 50, 50, .7);
     top: 25%;
     width: 600px;
+}
+
+h2 {
+    font-size: 3em;
 }
 
 .hint {
@@ -94,6 +101,41 @@ h1 {
 
 #start {
     cursor: pointer;
+}
+
+
+/* Invite Screen */
+#invite {
+    height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+#invite > * {
+    margin: 0 15%;
+}
+#invite h2 ~ * {
+    margin-top: 2em;
+}
+
+#invitelink > * {
+    padding: 1em;
+}
+#invitelink button {
+    background: rgba(0, 0, 0, .4);
+    border: none;
+    border-radius: 0 .5em .5em 0;
+    cursor: pointer;
+    float: right;
+}
+#invitelink p {
+    background: rgba(0, 0, 0, .2);
+    border-radius: .5em 0 0 .5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 

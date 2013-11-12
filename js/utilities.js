@@ -36,6 +36,13 @@ var Utilities = {
         }
     },
     
+    // Location
+    Location: {
+        site: window.location.origin,
+        path: window.location.pathname,
+        url: window.location.origin + window.location.pathname
+    },
+    
     // Peer handler
     PeerHandler: {
         connection: null,
@@ -68,6 +75,7 @@ var Utilities = {
 // Shorthands
 var ErrorMessages = Utilities.ErrorMessages,
     Loader = Utilities.Loader,
+    Location = Utilities.Location,
     PeerHandler = Utilities.PeerHandler,
     Trace = Utilities.Trace,
     URLParameters = Utilities.URLParameters();

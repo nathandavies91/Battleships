@@ -25,7 +25,14 @@ var HTML = {
     InviteScreen: function() {
         var template = '';
         template += '<section id="remote" class="board">';
-        template +=     '{{peer}}';
+        template +=     '<section id="invite">';
+        template +=         '<h2>Invite a Friend</h2>';
+        template +=         '<p>Send the following link to a friend</p>';
+        template +=         '<div id="invitelink">';
+        template +=             '<button class="copy">Copy</button>';
+        template +=             '<p>{{session}}</p>';
+        template +=         '</div>';
+        template +=     '</section>';
         template += '</section>';
         return template;
     }
