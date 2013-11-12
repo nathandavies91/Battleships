@@ -43,6 +43,9 @@ function Game() {
         
         // Show the other player's game board
         Game.prototype.RemoteGameBoard();
+        
+        // Lost connection with peer
+        PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
     });
 }
 

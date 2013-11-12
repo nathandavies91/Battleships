@@ -5,6 +5,30 @@
  */
 
 var Utilities = {
+    // In game error
+    InGameError: function(error) {
+        // Remove game session
+        $('body > \*:not(h1)').remove();
+        $('h1').show();
+        
+        // Show error
+        $('body').append(Mustache.render(HTML.div,{
+            id: 'message',
+            content: error
+        }));
+        
+        // New session
+        var newgame = $(Mustache.render(HTML.div, {
+            id: 'newsession',
+            content: '+ New game'
+        })).insertAfter('#message');
+        
+        // Load new session
+        newgame.bind('click', function() {
+            document.location = Utilities.Location.url;
+        });
+    },
+    
     // Loading indicator
     Loader: {
         id: 'loader',
@@ -36,7 +60,12 @@ var Utilities = {
     // Peer handler
     PeerHandler: {
         connection: null,
-        peer: null
+        peer: null,
+        
+        // Disconnected
+        Disconnected: function() {
+            Utilities.InGameError('Peer has disconnected');
+        }
     },
     
     // Trace

@@ -36,6 +36,9 @@ jQuery(function($) {
                 Trace.Information('Connecting to peer: '+PeerHandler.connection.peer);
                 
                 PeerHandler.connection.on('open', PlayGame);
+                
+                // Lost connection with peer
+                PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
             }
             else
                 PlayGame();
