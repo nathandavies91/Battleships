@@ -26,7 +26,7 @@ function LocalMediaStream() {
            },
            function(error) {
                // Damn! Oh well, just give the user a smiley face
-               Trace.Error('Error gathering user\'s media stream: '+error.name);
+               Trace.Warning('Error gathering user\'s media stream: '+error.name);
                LocalMediaStream.prototype.hint.Remove();
            }
        );

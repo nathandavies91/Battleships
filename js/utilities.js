@@ -53,10 +53,13 @@ var Utilities = {
     Trace: {
         level: 0,
         Error: function(error) {
-            if (this.level > 0) console.log('ERROR:: '+error);
+            if (this.level >= 1) console.error(error);
         },
         Information: function(information) {
-            if (this.level > 1) console.log('INFORMATION:: '+information);
+            if (this.level >= 3) console.info(information);
+        },
+        Warning: function(warning) {
+            if (this.level >= 2) console.warn(warning);
         }
     },
     
