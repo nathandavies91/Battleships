@@ -12,7 +12,7 @@ function Game() {
     this.localMediaStream = new LocalMediaStream();
     
     // Responsive grid
-    $(window).on('resize', function() { Game.prototype.gridController.Resize(); });
+    $(window).bind('resize', function() { Game.prototype.gridController.Resize(); });
     
     // Show the local player's game board
     this.LocalGameBoard();
@@ -38,7 +38,7 @@ function Game() {
     // Peer connection
     PeerHandler.peer.on('connection', function(connection) {
         // Store the connection
-        PeerHandler.connect = connection;
+        PeerHandler.connection = connection;
         Trace.Information('Peer has connected: '+PeerHandler.peer.id);
         
         // Show the other player's game board
