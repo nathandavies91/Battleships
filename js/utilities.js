@@ -5,14 +5,6 @@
  */
 
 var Utilities = {
-    // Error messages
-    ErrorMessages: {
-        browserSupport: 'This browser isn\'t supported',
-        peerConnection: 'Technical difficulties =(',
-        peerUnavailable: 'Session no longer exists',
-        userMedia: 'Error retrieving camera &amp; audio'
-    },
-    
     // Loading indicator
     Loader: {
         id: 'loader',
@@ -76,8 +68,7 @@ var Utilities = {
 }
 
 // Shorthands
-var ErrorMessages = Utilities.ErrorMessages,
-    Loader = Utilities.Loader,
+var Loader = Utilities.Loader,
     Location = Utilities.Location,
     PeerHandler = Utilities.PeerHandler,
     Trace = Utilities.Trace,

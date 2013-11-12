@@ -42,7 +42,7 @@ jQuery(function($) {
         }).on('error', function(error) {
             // Invalid peer?
             if (!error.type) {
-                ShowError(ErrorMessages.peerUnavailable);
+                ShowError('Session no longer exists');
                 PeerHandler.connection = null;
                 
                 // New session
@@ -54,7 +54,7 @@ jQuery(function($) {
                 });
             }
             else
-                ShowError(ErrorMessages.peerConnection, 'Error establishing a peer connection; '+error.type);
+                ShowError('Technical difficulties =(', 'Error establishing a peer connection; '+error.type);
         });
     }
     
