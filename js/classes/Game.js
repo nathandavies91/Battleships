@@ -24,11 +24,11 @@ function Game() {
         }));
         
         // Copy link
-        $('#invitelink .copy').zclip({
+        $('#invitelink').zclip({
             path: './js/lib/zclip.swf',
             copy: $('#invitelink p').html(),
             afterCopy: function() {
-                $(this).html('Copied');
+                $('#invitelink .copy').html('Copied');
             }
         });
     }

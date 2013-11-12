@@ -120,7 +120,7 @@ h2 {
     margin-top: 2em;
 }
 
-#invitelink > *:not(.zclip) {
+#invitelink > * {
     padding: 1em;
 }
 #invitelink button {
@@ -136,6 +136,9 @@ h2 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+#invitelink + .zclip {
+    margin: 0 !important;
 }
 
 
