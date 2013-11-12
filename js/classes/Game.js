@@ -39,7 +39,7 @@ function Game() {
     PeerHandler.peer.on('connection', function(connection) {
         // Store the connection
         PeerHandler.connect = connection;
-        Trace.Information('Peer has connected: '+PeerHandler.connect.id);
+        Trace.Information('Peer has connected: '+PeerHandler.peer.id);
         
         // Show the other player's game board
         Game.prototype.RemoteGameBoard();
