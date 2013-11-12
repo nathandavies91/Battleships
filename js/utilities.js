@@ -65,6 +65,7 @@ var Utilities = {
         // Disconnected
         Disconnected: function() {
             Utilities.InGameError('Peer has disconnected');
+            PeerHandler.peer.destroy();
         }
     },
     
