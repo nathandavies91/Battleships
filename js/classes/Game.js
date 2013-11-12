@@ -22,6 +22,15 @@ function Game() {
         $('body').append(Mustache.render(HTML.InviteScreen(), {
             session: Location.url + '?session=' + PeerHandler.peer.id
         }));
+        
+        // Copy link
+        $('#invitelink .copy').zclip({
+            path: './js/lib/zclip.swf',
+            copy: $('#invitelink p').html(),
+            afterCopy: function() {
+                $(this).html('Copied');
+            }
+        });
     }
     else
         this.RemoteGameBoard();

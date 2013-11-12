@@ -106,8 +106,8 @@ h2 {
 
 /* Invite Screen */
 #invite {
-    height: 200px;
-    margin-top: -100px;
+    height: 190px;
+    margin-top: -95px;
     position: absolute;
     text-align: center;
     top: 50%;
@@ -120,7 +120,7 @@ h2 {
     margin-top: 2em;
 }
 
-#invitelink > * {
+#invitelink > *:not(.zclip) {
     padding: 1em;
 }
 #invitelink button {
