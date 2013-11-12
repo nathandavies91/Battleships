@@ -30,9 +30,7 @@ var Utilities = {
     
     // Location
     Location: {
-        site: window.location.origin,
-        path: window.location.pathname,
-        url: window.location.origin + window.location.pathname
+        url: (window.location.origin + window.location.pathname).replace(/\/$/, '')
     },
     
     // Peer handler
