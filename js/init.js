@@ -35,10 +35,8 @@ jQuery(function($) {
                 PeerHandler.connection = PeerHandler.peer.connect(URLParameters.session);
                 Trace.Information('Connecting to peer: '+PeerHandler.connection.peer);
                 
+                // Open the game
                 PeerHandler.connection.on('open', PlayGame);
-                
-                // Lost connection with peer
-                PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
             }
             else
                 PlayGame();

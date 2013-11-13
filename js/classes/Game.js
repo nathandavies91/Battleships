@@ -36,17 +36,16 @@ function Game() {
         this.RemoteGameBoard();
     
     // Peer connection
+    if (PeerHandler.connection) this.PeerHandlers();
     PeerHandler.peer.on('connection', function(connection) {
         if (!PeerHandler.connection) {
             // Store the connection
             PeerHandler.connection = connection;
             Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
+            Game.prototype.PeerHandlers();
             
             // Show the other player's game board
             Game.prototype.RemoteGameBoard();
-            
-            // Lost connection with peer
-            PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
         }
     });
     
@@ -74,6 +73,15 @@ Game.prototype = {
         
         new GameBoard($.extend({id:'local',muted:true},properties));
         this.gridController.Resize();
+    },
+    
+    // Peer handlers
+    PeerHandlers: function() {
+        // Lost connection with peer
+        PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
+        
+        // Error occurred with the connection
+        PeerHandler.connection.on('error', function(error) { PeerHandler.Error(error); });
     },
     
     // Show remote game board
