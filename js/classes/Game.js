@@ -47,6 +47,11 @@ function Game() {
         // Lost connection with peer
         PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
     });
+    
+    // Destroy the peer session when the window has been unloaded
+    $(window).unload(function() {
+        PeerHandler.peer.destroy();
+    });
 }
 
 Game.prototype = {
