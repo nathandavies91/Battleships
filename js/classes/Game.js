@@ -7,6 +7,9 @@
 function Game() {
     Trace.Information('New Game()');
     
+    // Stop the loader
+    Loader.Stop();
+    
     // Required resources
     Game.prototype.gridController = new GridController();
     this.localMediaStream = new LocalMediaStream();
@@ -42,10 +45,20 @@ function Game() {
             // Store the connection
             PeerHandler.connection = connection;
             Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
-            Game.prototype.PeerHandlers();
             
-            // Show the other player's game board
-            Game.prototype.RemoteGameBoard();
+            // Open the connection
+            PeerHandler.connection.on('open', function() {
+                connection.send({connected:true});
+                
+                Game.prototype.PeerHandlers();
+                Game.prototype.RemoteGameBoard();
+            });
+        }
+        else {
+            // Notify the peer that this game is full
+            connection.on('open', function() {
+                connection.send({connected:false});
+            });
         }
     });
     
@@ -64,7 +77,6 @@ Game.prototype = {
     LocalGameBoard: function() {
         // Hide a few things
         $('h1').hide();
-        $('#message').remove();
         
         // Stream properties
         var properties;

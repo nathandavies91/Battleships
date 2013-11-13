@@ -6,8 +6,8 @@
 
 jQuery(function($) {
     // Elements
-    var message = $('#message'),
-        newSession,
+    var heading = $('h1'),
+        message,
         start;
     
     // Level of logging
@@ -17,11 +17,15 @@ jQuery(function($) {
     // Remove body scripts
     $('body script').remove();
     
+    // Show the start button
+    start = $(Mustache.render(HTML.div,{id:'start',content:'Start'})).insertAfter(heading);
+    start.bind('click initiation', function() {
+        $(this).remove();
+        InitiateGame();
+    });
+    
     // Initiate the game
     function InitiateGame(bypassHost) {
-        // Remove the start button
-        start.remove();
-        
         // Loading indicator
         Loader.Start();
         
@@ -36,33 +40,42 @@ jQuery(function($) {
                 Trace.Information('Connecting to peer: '+PeerHandler.connection.peer);
                 
                 // Open the game
-                PeerHandler.connection.on('open', PlayGame);
-            }
-            else
-                PlayGame();
-        }).on('error', function(error) {
-            // Invalid peer?
-            if (!error.type) {
-                ShowError('Session no longer exists');
-                PeerHandler.connection = null;
-                
-                // New session
-                newSession = $(Mustache.render(HTML.div,{id:'newsession',content:'+ New session'})).insertAfter(message);
-                newSession.on('click', function() {
-                    $(this).hide();
-                    message.hide();
-                    InitiateGame(true);
+                PeerHandler.connection.on('open', function() {
+                    PeerHandler.connection.on('data', function(data) {
+                        if (data.connected)
+                            new Game();
+                        else
+                            SessionIssue('Session is full');
+                    });
                 });
             }
+            else
+                new Game();
+        }).on('error', function(error) {
+            // Session outdated?
+            if (!error.type)
+                SessionIssue('Session no longer exists');
             else
                 ShowError('Technical difficulties =(', 'Error establishing a peer connection; '+error.type);
         });
     }
     
-    // Play the game
-    function PlayGame() {
-        Loader.Stop();
-        new Game();
+    // If a session identifier has been supplied, auto-start the initiation
+    if (URLParameters.session)
+        start.trigger('initiation');
+    
+    // New session option
+    function SessionIssue(error) {
+        ShowError(error);
+        PeerHandler.connection = null;
+        
+        // New session
+        var newSession = $(Mustache.render(HTML.div,{id:'newsession',content:'+ New session'})).insertAfter(message);
+        newSession.bind('click', function() {
+            $(this).remove();
+            message.remove();
+            InitiateGame(true);
+        });
     }
     
     // Show error
@@ -70,22 +83,8 @@ jQuery(function($) {
         // Trace error
         Trace.Error((!trace) ? error : trace);
         
-        // Remove the loader, and display the error
+        // Stop the loader, and display the error
         Loader.Stop();
-        message.html(error).show();
+        message = $(Mustache.render(HTML.div,{id:'message',content:error})).insertAfter('h1');
     }
-    
-    // Initiate: show the start button
-    function StartButton() {
-        message.hide();
-        start = $(Mustache.render(HTML.div,{id:'start',content:'Start'})).insertAfter(message);
-    } StartButton();
-    
-    // If a session identifier has been supplied, auto-start the initiation
-    if (URLParameters.session)
-        InitiateGame();
-    
-    
-    // Start button
-    $('#start').bind('click', InitiateGame);
 });

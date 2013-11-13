@@ -66,14 +66,15 @@ var Utilities = {
         
         // Disconnected
         Disconnected: function() {
-            this.Error('Peer has disconnected', true);
+            Trace.Error('Peer has disconnected');
+            Utilities.InGameError('Peer has disconnected');
             PeerHandler.peer.destroy();
         },
         
         // Error
-        Error: function(error, showMessage) {
+        Error: function(error) {
             Trace.Error(error);
-            Utilities.InGameError((showMessage) ? error : 'Technical difficulties =(');
+            Utilities.InGameError('Technical difficulties =(');
         }
     },
     
