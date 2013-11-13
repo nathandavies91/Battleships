@@ -210,7 +210,7 @@ h2 {
 }
 .board .video video {
     background: #666 url('../images/no-video.png') no-repeat center;
-    box-shadow: inset 0 0 20px #333;
+    box-shadow: inset 0 0 40px #333;
     float: right;
     height: 149px;
     width: 200px;
