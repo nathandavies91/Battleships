@@ -48,6 +48,11 @@ function Game() {
         PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
     });
     
+    // Are you sure you want to quit?
+    $(window).bind('beforeunload', function() {
+        return 'Navigating away from this page will destroy your game session.';
+    });
+    
     // Destroy the peer session when the window has been unloaded
     $(window).unload(function() {
         PeerHandler.peer.destroy();
