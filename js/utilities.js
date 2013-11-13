@@ -7,6 +7,8 @@
 var Utilities = {
     // In game error
     InGameError: function(error) {
+        $(window).unbind('beforeunload');
+        
         // Remove game session
         $('body > \*:not(h1)').remove();
         $('h1').show();

@@ -54,11 +54,6 @@ function Game() {
     $(window).bind('beforeunload', function() {
         return 'Navigating away from this page will destroy the game session.';
     });
-    
-    // Destroy the peer session when the window has been unloaded
-    $(window).unload(function() {
-        PeerHandler.peer.destroy();
-    });
 }
 
 Game.prototype = {
