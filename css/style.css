@@ -152,7 +152,6 @@ h2 {
 
 .board aside {
     background: white;
-    border-right: 4px solid #0B0;
     float: left;
     overflow: hidden;
     padding: 6px;
@@ -194,6 +193,26 @@ h2 {
     border-bottom: 1px dashed #9AE2E2;
 }
 
+.board .score {
+    background: #090;
+    float: left;
+    font-size: 6em;
+    height: 161px;
+    line-height: 161px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    width: 161px;
+}
+.board .score span {
+    font-size: .15em;
+    line-height: 0;
+    opacity: .9;
+    position: absolute;
+    top: .6em;
+    left: .6em;
+}
+
 /* Remote Board */
 #remote.board {
     background: rgba(0, 0, 0, .2);
@@ -201,8 +220,9 @@ h2 {
     right: 0;
 }
 
-#remote.board aside {
-    border-left: 4px solid red;
-    border-right: 0;
+#remote.board aside, #remote.board .score {
     float: right;
 }
+
+#remote.board .score {
+    background: #B00;

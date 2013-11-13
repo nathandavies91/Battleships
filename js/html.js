@@ -11,6 +11,7 @@ var HTML = {
     GameBoard: function() { 
         var template = '';
         template += '<section id="{{id}}" class="board">';
+        template +=     '<section class="score"><span>Score</span>{{score}}</section>';
         template +=     '<aside>';
         template +=         '<video{{#stream}} src="{{stream}}"{{/stream}} autoplay{{#muted}} muted{{/muted}}></video>';
         template +=     '</aside>';

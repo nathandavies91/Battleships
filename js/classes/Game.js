@@ -71,12 +71,14 @@ function Game() {
 
 Game.prototype = {
     gridController: null,
+    localGameScore: 0,
     localMediaStream: null,
+    remoteGameScore: 0,
     remoteMediaStream: null,
     
     // Show local game board
     LocalGameBoard: function() {
-        // Hide a few things
+        // Hide the heading
         $('h1').hide();
         
         // Stream properties
@@ -84,7 +86,11 @@ Game.prototype = {
         if (this.localMediaStream)
             properties = {stream: this.localMediaStream.ObjectURL()};
         
-        new GameBoard($.extend({id: 'local', muted: true}, properties));
+        new GameBoard($.extend({
+            id: 'local',
+            muted: true,
+            score: this.localGameScore
+        }, properties));
         this.gridController.Resize();
     },
     
@@ -117,7 +123,10 @@ Game.prototype = {
         if (this.remoteMediaStream)
             properties = {stream: this.remoteMediaStream.ObjectURL()}
         
-        new GameBoard($.extend({id: 'remote'}, properties));
+        new GameBoard($.extend({
+            id: 'remote',
+            score: this.remoteGameScore
+        }, properties));
         this.gridController.Resize();
     },
     
