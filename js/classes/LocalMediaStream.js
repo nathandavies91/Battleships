@@ -23,6 +23,9 @@ function LocalMediaStream() {
                
                // Hide the hint
                LocalMediaStream.prototype.hint.Remove();
+               
+               // Video call
+               Game.prototype.VideoCall();
            },
            function(error) {
                // Damn! Oh well, just give the user a smiley face

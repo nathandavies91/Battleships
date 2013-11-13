@@ -12,7 +12,7 @@ function Game() {
     
     // Required resources
     Game.prototype.gridController = new GridController();
-    this.localMediaStream = new LocalMediaStream();
+    Game.prototype.localMediaStream = new LocalMediaStream();
     
     // Responsive grid
     $(window).bind('resize', function() { Game.prototype.gridController.Resize(); });
@@ -44,11 +44,11 @@ function Game() {
         if (!PeerHandler.connection) {
             // Store the connection
             PeerHandler.connection = connection;
-            Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
             
-            // Open the connection
+            // Open the connection and show the remote game board
             PeerHandler.connection.on('open', function() {
-                connection.send({connected:true});
+                Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
+                connection.send({state:'initiation'});
                 
                 Game.prototype.PeerHandlers();
                 Game.prototype.RemoteGameBoard();
@@ -56,8 +56,9 @@ function Game() {
         }
         else {
             // Notify the peer that this game is full
+            Trace.Information(connection.peer+' was rejected as game is full');
             connection.on('open', function() {
-                connection.send({connected:false});
+                connection.send({state:'gameisfull'});
             });
         }
     });
@@ -83,16 +84,29 @@ Game.prototype = {
         if (this.localMediaStream)
             properties = {stream: this.localMediaStream.ObjectURL()};
         
-        new GameBoard($.extend({id:'local',muted:true},properties));
+        new GameBoard($.extend({id: 'local', muted: true}, properties));
         this.gridController.Resize();
     },
     
     // Peer handlers
-    PeerHandlers: function() {
-        // Lost connection with peer
-        PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
+    PeerHandlers: function() {        
+        // Accept video call
+        this.VideoCall();
+        PeerHandler.peer.on('call', function(call) {
+            PeerHandler.call = call;
+            PeerHandler.call.answer();
+            PeerHandler.call.on('stream', function(stream) {
+                Game.prototype.remoteMediaStream = new RemoteMediaStream(stream);
+            });
+        });
         
-        // Error occurred with the connection
+        // Handle received data
+        PeerHandler.connection.on('data', function(data) {
+            //
+        });
+        
+        // Lost connect, or an error occurred
+        PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
         PeerHandler.connection.on('error', function(error) { PeerHandler.Error(error); });
     },
     
@@ -103,7 +117,15 @@ Game.prototype = {
         if (this.remoteMediaStream)
             properties = {stream: this.remoteMediaStream.ObjectURL()}
         
-        new GameBoard($.extend({id:'remote'},properties));
+        new GameBoard($.extend({id: 'remote'}, properties));
         this.gridController.Resize();
+    },
+    
+    // Video call
+    VideoCall: function() {
+        if (this.localMediaStream && PeerHandler.connection) {
+            Trace.Information('Sending media stream to remote peer...');
+            PeerHandler.peer.call(PeerHandler.connection.peer, Game.prototype.localMediaStream.stream);
+        }
     }
 }

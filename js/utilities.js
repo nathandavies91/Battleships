@@ -61,6 +61,7 @@ var Utilities = {
     
     // Peer handler
     PeerHandler: {
+        call: null,
         connection: null,
         peer: null,
         

@@ -42,9 +42,9 @@ jQuery(function($) {
                 // Open the game
                 PeerHandler.connection.on('open', function() {
                     PeerHandler.connection.on('data', function(data) {
-                        if (data.connected)
+                        if (data.state == 'initiation')
                             new Game();
-                        else
+                        else if (data.state == 'gameisfull')
                             SessionIssue('Session is full');
                     });
                 });
