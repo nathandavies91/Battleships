@@ -37,15 +37,17 @@ function Game() {
     
     // Peer connection
     PeerHandler.peer.on('connection', function(connection) {
-        // Store the connection
-        PeerHandler.connection = connection;
-        Trace.Information('Peer has connected: '+PeerHandler.peer.id);
-        
-        // Show the other player's game board
-        Game.prototype.RemoteGameBoard();
-        
-        // Lost connection with peer
-        PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
+        if (!PeerHandler.connection) {
+            // Store the connection
+            PeerHandler.connection = connection;
+            Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
+            
+            // Show the other player's game board
+            Game.prototype.RemoteGameBoard();
+            
+            // Lost connection with peer
+            PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
+        }
     });
     
     // Are you sure you want to quit?
