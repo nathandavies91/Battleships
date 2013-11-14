@@ -5,6 +5,8 @@
  */
 
 function Plotter() {
+    var ENTER_KEY = 32;
+    
     Trace.Information('New Plotter()');
     
     // Highlight ship plot area
@@ -24,7 +26,7 @@ function Plotter() {
     
     // Change orientation state when space bar has been pressed
     $('body').bind('keyup', function(e) {
-        if (e.keyCode == 32)
+        if (e.keyCode == ENTER_KEY)
             Plotter.prototype.ChangeOrientation();
     });
     
