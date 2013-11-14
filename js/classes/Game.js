@@ -35,8 +35,6 @@ function Game() {
             }
         });
     }
-    else
-        this.RemoteGameBoard();
     
     // Peer connection
     if (PeerHandler.connection) this.PeerHandlers();
@@ -51,7 +49,6 @@ function Game() {
                 connection.send({state:'initiation'});
                 
                 Game.prototype.PeerHandlers();
-                Game.prototype.RemoteGameBoard();
             });
         }
         else {
@@ -77,6 +74,11 @@ Game.prototype = {
     remoteGameScore: 0,
     remoteMediaStream: null,
     
+    // Is ready?
+    IsReady: function() {
+        return (this.plotter) ? this.plotter.IsReady() : false;
+    },
+    
     // Show local game board
     LocalGameBoard: function() {
         // Hide the heading
@@ -100,6 +102,9 @@ Game.prototype = {
     
     // Peer handlers
     PeerHandlers: function() {        
+        // Show remote gameboard
+        this.RemoteGameBoard();
+        
         // Accept video call
         this.VideoCall();
         PeerHandler.peer.on('call', function(call) {

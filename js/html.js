@@ -17,12 +17,13 @@ var HTML = {
         template +=     '<section class="score"><span>Score</span>{{score}}</section>';
         template +=     '{{#local}}';
         template +=         '<section class="instructions">';
-        template +=             '<h2>Plot Ships</h2>';
+        template +=             '<h2>Plotting Ships</h2>';
         template +=             '<ul>';
-        template +=                 '<li>Use the space-bar key to adjust the orientation of the ship</li>';
+        template +=                 '<li>Use the space-bar key to adjust the orientation</li>';
         template +=                 '<li>Double click a ship to remove it</li>';
         template +=             '</ul>';
         template +=         '</section>';
+        template +=         '<div id="ready" class="disabled">Ready &raquo;</div>';
         template +=     '{{/local}}';
         template +=     '<section class="grid">';
         template +=         '{{#grid}}<div class="row">{{#.}}<div class="block"></div>{{/.}}</div>{{/grid}}';

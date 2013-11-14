@@ -10,17 +10,17 @@ function Plotter() {
     Trace.Information('New Plotter()');
     
     // Highlight ship plot area
-    $(this.block).bind('mouseover', function() {
+    $(this.blockClass).bind('mouseover', function() {
         Plotter.prototype.Highlight($(this));
     });
     
     // Clean up the highlighting
-    $(this.block).bind('mouseout', function() {
+    $(this.blockClass).bind('mouseout', function() {
         Plotter.prototype.RemoveHighlighting();
     });
     
     // Place ship
-    $(this.block).bind('click', function() {
+    $(this.blockClass).bind('click', function() {
         Plotter.prototype.PlaceShip($(this));
     });
     
@@ -31,17 +31,18 @@ function Plotter() {
     });
     
     // A bit of OCD
-    $(this.grid).bind('mouseout', function() {
+    $(this.gridClass).bind('mouseout', function() {
         Plotter.prototype.RemoveFocus();
     });
 }
 
 Plotter.prototype = {
-    block: '#local .grid .block',
+    blockClass: '#local .grid .block',
     focus: null,
-    grid: '#local .grid',
+    gridClass: '#local .grid',
     highlightClass: 'highlight',
     hint: null,
+    readyId: '#ready',
     shipClass: 'ship',
     vertical: true,
     
@@ -51,6 +52,18 @@ Plotter.prototype = {
         
         // Re-highlight
         this.Rehighlight();
+    },
+    
+    // Disable the ready button
+    DisableReady: function() {
+        $(this.readyId).addClass('disabled').unbind('click');
+    },
+    
+    // Enable the ready button
+    EnableReady: function() {
+        $('#ready').removeClass('disabled').bind('click', function() {
+            window.alert('coming soon');
+        });
     },
     
     // Highlight
@@ -115,12 +128,12 @@ Plotter.prototype = {
                 plot = new Array();
             
             // Make sure this ship isn't overlapping another
-            $(this.block+'.'+this.highlightClass).each(function() {
+            $(this.blockClass+'.'+this.highlightClass).each(function() {
                 if ($(this).hasClass(Plotter.prototype.shipClass))
                     clear = false;
             });
             if (clear) {
-                $(this.block+'.'+this.highlightClass).each(function() {
+                $(this.blockClass+'.'+this.highlightClass).each(function() {
                     // Toggle class
                     $(this)
                         .addClass(Plotter.prototype.shipClass
@@ -136,7 +149,7 @@ Plotter.prototype = {
                 this.SelectedShip().Plot(plot);
             
                 // Ability to remove the ship
-                $(this.block+'.'+this.shipClass).unbind('dblclick').bind('dblclick', function() {
+                $(this.blockClass+'.'+this.shipClass).unbind('dblclick').bind('dblclick', function() {
                     Plotter.prototype.RemoveShip($(this));
                 });
                 
@@ -144,6 +157,10 @@ Plotter.prototype = {
                 this.Rehighlight(focus);
             }
         }
+        
+        // If there are no ships left to plot, show the ready button
+        if (!this.SelectedShip())
+            this.EnableReady();
     },
     
     // Re-highlight
@@ -160,7 +177,7 @@ Plotter.prototype = {
     
     // Remove highlighting
     RemoveHighlighting: function() {
-        $(this.block+'.'+this.highlightClass).each(function() {
+        $(this.blockClass+'.'+this.highlightClass).each(function() {
             $(this).removeClass(Plotter.prototype.highlightClass);
         });
     },
@@ -189,6 +206,9 @@ Plotter.prototype = {
         
         // Re-highlight
         this.Rehighlight(o);
+        
+        // Hide ready
+        this.DisableReady();
     },
     
     // Selected ship
