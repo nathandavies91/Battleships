@@ -100,9 +100,9 @@ Plotter.prototype = {
             // Highlight blocks
             for (var i = 0; i < plot.length; i++)
                 plot[i].addClass(this.highlightClass);
-            
-            this.focus = o;
         }
+        if (o)
+            this.focus = o;
     },
     
     // Place ship
@@ -130,15 +130,16 @@ Plotter.prototype = {
                 
                 // Save state with the ship
                 this.SelectedShip().Plot(plot);
+            
+                // Ability to remove the ship
+                $(this.block+'.'+this.shipClass).unbind('dblclick').bind('dblclick', function() {
+                    Plotter.prototype.RemoveShip($(this));
+                });
+                
+                // Re-highlight
+                this.focus = plot[Math.floor(plot.length/2)];
+                this.Rehighlight();
             }
-            
-            // Ability to remove the ship
-            $(this.block+'.'+this.shipClass).unbind('dblclick').bind('dblclick', function() {
-                Plotter.prototype.RemoveShip($(this));
-            });
-            
-            // Re-highlight
-            this.Rehighlight();
         }
     },
     
@@ -209,8 +210,8 @@ Plotter.prototype = {
     Ships: {
         aircraftCarrier: null,
         battleship: null,
+        submarine: null,
         destoyer: null,
-        patrolBoat: null,
-        submarine: null
+        patrolBoat: null
     }
 }
