@@ -42,6 +42,7 @@ Plotter.prototype = {
     gridClass: '#local .grid',
     highlightClass: 'highlight',
     hint: null,
+    instructionsClass: '#local .instructions',
     readyId: '#ready',
     shipClass: 'ship',
     vertical: true,
@@ -62,8 +63,21 @@ Plotter.prototype = {
     // Enable the ready button
     EnableReady: function() {
         $('#ready').removeClass('disabled').bind('click', function() {
-            window.alert('coming soon');
+            Plotter.prototype.FinishPlotting();
         });
+    },
+    
+    // Finish plotting
+    FinishPlotting: function() {
+        // Unbind all the plotting events
+        $(this.blockClass).unbind('mouseover mouseout click');
+        $(this.gridClass).unbind('mouseout');
+        $(this.blockClass+'.'+this.shipClass).unbind('dblclick');
+        $(this.readyId).unbind('click');
+        $('body').unbind('keyup');
+        
+        // Remove elements
+        $(this.readyId+','+this.instructionsClass).remove();
     },
     
     // Highlight
