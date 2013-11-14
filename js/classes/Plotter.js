@@ -27,13 +27,18 @@ function Plotter() {
         if (e.keyCode == 32)
             Plotter.prototype.ChangeOrientation();
     });
+    
+    // A bit of OCD
+    $(this.grid).bind('mouseout', function() {
+        Plotter.prototype.RemoveFocus();
+    });
 }
 
 Plotter.prototype = {
     block: '#local .grid .block',
+    focus: null,
     grid: '#local .grid',
     highlightClass: 'highlight',
-    plot: null,
     shipClass: 'ship',
     vertical: true,
     
@@ -43,60 +48,62 @@ Plotter.prototype = {
         
         // Re-highlight
         this.RemoveHighlighting();
-        this.Highlight(this.plot[0]);
+        this.Highlight(this.focus);
     },
     
     // Highlight
     Highlight: function(o) {
-        var size = this.SelectedShip().size,
-            plot = new Array(),
-            post = Math.ceil((size - 1) / 2),
-            pre = Math.floor((size - 1) / 2);
-        
-        // Initial block
-        plot[0] = o;
-        
-        // Vertical ship
-        if (this.vertical) {
-            var child = '.block:nth-child('+(o.index()+1)+')';
+        if (o && (ship = this.SelectedShip())) {
+            var size = ship.size,
+                plot = new Array(),
+                post = Math.ceil((size - 1) / 2),
+                pre = Math.floor((size - 1) / 2);
             
-            // Correct focus; prevents the shop from overflowing the grid
-            if ((index = o.parent().index()) < pre)
-                post += pre - index;
-            else if ((index = (o.parent().index() + 1)) > ((length = o.parent().parent().children().length) - post))
-                pre += post - (length - index);
+            // Initial block
+            plot[0] = o;
             
-            // Post blocks
-            for (var i = 0; i < post; i++)
-                plot[plot.length] = plot[plot.length-1].parent().next().children(child);
+            // Vertical ship
+            if (this.vertical) {
+                var child = '.block:nth-child('+(o.index()+1)+')';
+                
+                // Correct focus; prevents the shop from overflowing the grid
+                if ((index = o.parent().index()) < pre)
+                    post += pre - index;
+                else if ((index = (o.parent().index() + 1)) > ((length = o.parent().parent().children().length) - post))
+                    pre += post - (length - index);
+                
+                // Post blocks
+                for (var i = 0; i < post; i++)
+                    plot[plot.length] = plot[plot.length-1].parent().next().children(child);
+                
+                // Pre blocks
+                plot[plot.length] = o;
+                for (var i = 0; i < pre; i++)
+                    plot[plot.length] = plot[plot.length-1].parent().prev().children(child);
+            }
+            else {
+                // Correct focus; prevents the ship from overflowing the grid
+                if ((index = o.index()) < pre)
+                    post += pre - index;
+                else if ((index = (o.index() + 1)) > ((length = o.parent().children().length) - post))
+                    pre += post - (length - index);
+                
+                // Post blocks
+                for (var i = 0; i < post; i++)
+                    plot[plot.length] = plot[plot.length-1].next();
+                
+                // Pre blocks
+                plot[plot.length] = o;
+                for (var i = 0; i < pre; i++)
+                    plot[plot.length] = plot[plot.length-1].prev();
+            }
             
-            // Pre blocks
-            plot[plot.length] = o;
-            for (var i = 0; i < pre; i++)
-                plot[plot.length] = plot[plot.length-1].parent().prev().children(child);
+            // Highlight blocks
+            for (var i = 0; i < plot.length; i++)
+                plot[i].addClass(this.highlightClass);
+            
+            this.focus = o;
         }
-        else {
-            // Correct focus; prevents the ship from overflowing the grid
-            if ((index = o.index()) < pre)
-                post += pre - index;
-            else if ((index = (o.index() + 1)) > ((length = o.parent().children().length) - post))
-                pre += post - (length - index);
-            
-            // Post blocks
-            for (var i = 0; i < post; i++)
-                plot[plot.length] = plot[plot.length-1].next();
-            
-            // Pre blocks
-            plot[plot.length] = o;
-            for (var i = 0; i < pre; i++)
-                plot[plot.length] = plot[plot.length-1].prev();
-        }
-        
-        // Highlight blocks
-        for (var i = 0; i < plot.length; i++)
-            plot[i].addClass(this.highlightClass);
-        
-        this.plot = plot;
     },
     
     // Place ship
@@ -125,12 +132,16 @@ Plotter.prototype = {
         }
     },
     
+    // Remove focus
+    RemoveFocus: function() {
+        this.focus = null;
+    },
+    
     // Remove highlighting
     RemoveHighlighting: function() {
-        if (this.plot) {
-            for (var i = 0; i < this.plot.length; i++)
-                this.plot[i].removeClass(this.highlightClass);
-        }
+        $(this.block+'.'+this.highlightClass).each(function() {
+            $(this).removeClass(Plotter.prototype.highlightClass);
+        });
     },
     
     // Selected ship
