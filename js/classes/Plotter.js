@@ -47,8 +47,7 @@ Plotter.prototype = {
         this.vertical = !this.vertical;
         
         // Re-highlight
-        this.RemoveHighlighting();
-        this.Highlight(this.focus);
+        this.Rehighlight();
     },
     
     // Highlight
@@ -120,18 +119,33 @@ Plotter.prototype = {
             if (clear) {
                 $(this.block+'.'+this.highlightClass).each(function() {
                     // Toggle class
-                    $(this).toggleClass(Plotter.prototype.highlightClass
-                                        +' '+Plotter.prototype.shipClass
-                                        +' '+Plotter.prototype.SelectedShip().class);
+                    $(this)
+                        .addClass(Plotter.prototype.shipClass
+                                  +' '+Plotter.prototype.SelectedShip().class)
+                        .removeClass(Plotter.prototype.highlightClass);
                     
                     // Store the block
                     plot[plot.length] = $(this);
                 });
                 
                 // Save state with the ship
-                this.SelectedShip().plot = plot;
+                this.SelectedShip().Plot(plot);
             }
+            
+            // Ability to remove the ship
+            $(this.block+'.'+this.shipClass).unbind('dblclick').bind('dblclick', function() {
+                Plotter.prototype.RemoveShip($(this));
+            });
+            
+            // Re-highlight
+            this.Rehighlight();
         }
+    },
+    
+    // Re-highlight
+    Rehighlight: function() {
+        this.RemoveHighlighting();
+        this.Highlight(this.focus);
     },
     
     // Remove focus
@@ -144,6 +158,25 @@ Plotter.prototype = {
         $(this.block+'.'+this.highlightClass).each(function() {
             $(this).removeClass(Plotter.prototype.highlightClass);
         });
+    },
+    
+    // Remove ship
+    RemoveShip: function(ship) {
+        var shipClass = ship.attr('class'),
+            Ships = this.Ships;
+        
+        // What ship is being removed?
+        for (var ship in Ships) {
+            if (shipClass.indexOf(Ships[ship].class) != -1) {
+                // Remove the ship
+                $('.'+Ships[ship].class).removeClass(Ships[ship].class+' '+this.shipClass);
+                Ships[ship].Remove();
+                break;
+            }
+        }
+        
+        // Re-highlight
+        this.Rehighlight();
     },
     
     // Selected ship

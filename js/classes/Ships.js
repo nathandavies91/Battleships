@@ -9,9 +9,19 @@ Ship.prototype = {
     class: 'ship',
     plot: null,
     
+    // Plot
+    Plot: function(plot) {
+        this.plot = plot;
+    },
+    
     // Has this been plotted?
     Plotted: function() {
         return (this.plot) ? true : false;
+    },
+    
+    // Remove ship
+    Remove: function() {
+        this.plot = null;
     }
 }
 
