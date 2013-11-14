@@ -178,6 +178,14 @@ h2 {
     border-bottom: 1px dashed #9AE2E2;
 }
 
+.board .grid .row .block.highlight, .board .grid .row .block.ship {
+    background: rgba(0, 0, 0, .2);
+}
+
+.board .grid .row .block.highlight.ship {
+    background: rgba(255, 0, 0, .4);
+}
+
 .board .score, .board .video {
     background: rgba(255, 255, 255, .2);
 }

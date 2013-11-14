@@ -73,6 +73,7 @@ Game.prototype = {
     gridController: null,
     localGameScore: 0,
     localMediaStream: null,
+    plotter: null,
     remoteGameScore: 0,
     remoteMediaStream: null,
     
@@ -92,6 +93,9 @@ Game.prototype = {
             score: this.localGameScore
         }, properties));
         this.gridController.Resize();
+        
+        // Plot ships
+        this.plotter = new Plotter();
     },
     
     // Peer handlers

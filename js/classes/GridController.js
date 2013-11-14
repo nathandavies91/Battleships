@@ -4,25 +4,25 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function GridController(bypassTrace) {
-    if (!bypassTrace) Trace.Information('New GridController()');
+function GridController() {
+    Trace.Information('New GridController()');
 }
 
 GridController.prototype = {
-    asideHeight: 162,
+    navigationHeight: 162,
     id: '.board .grid',
     padding: 20,
     
     // Resize
     Resize: function() {
         // Available height and width
-        var availableHeight = $(window).height() - ((this.padding * 2) + this.asideHeight),
+        var availableHeight = $(window).height() - ((this.padding * 2) + this.navigationHeight),
             availableWidth = ($(window).width() / 2) - (this.padding * 2);
         
         // Grid size
         var gridSize = (availableHeight < availableWidth) ? availableHeight : availableWidth,
             gridSideMargin = (gridSize/2) * -1,
-            gridTopMargin = gridSideMargin + (this.asideHeight / 2);
+            gridTopMargin = gridSideMargin + (this.navigationHeight / 2);
         
         // Resize grid containers
         $(this.id).each(function() {
