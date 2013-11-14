@@ -15,6 +15,15 @@ var HTML = {
         template +=         '<video{{#stream}} src="{{stream}}"{{/stream}} autoplay{{#muted}} muted{{/muted}}></video>';
         template +=     '</section>';
         template +=     '<section class="score"><span>Score</span>{{score}}</section>';
+        template +=     '{{#local}}';
+        template +=         '<section class="instructions">';
+        template +=             '<h2>Plot Ships</h2>';
+        template +=             '<ul>';
+        template +=                 '<li>Use the space key to adjust the orientation of the ship</li>';
+        template +=                 '<li>Double click a ship to remove it</li>';
+        template +=             '</ul>';
+        template +=         '</section>';
+        template +=     '{{/local}}';
         template +=     '<section class="grid">';
         template +=         '{{#grid}}<div class="row">{{#.}}<div class="block"></div>{{/.}}</div>{{/grid}}';
         template +=     '</section>';

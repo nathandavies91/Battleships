@@ -186,10 +186,26 @@ h2 {
     background: rgba(255, 0, 0, .4);
 }
 
+.board .instructions {
+    height: 149px;
+    left: 377px;
+    overflow: auto;
+    padding: 6px 12px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.board .instructions h2 {
+    font-size: 2em;
+}
+.board .instructions ul li {
+    list-style: inside square;
+    margin-top: .3em;
+}
+
 .board .score, .board .video {
     background: rgba(255, 255, 255, .2);
 }
-
 .board .score {
     border-right: 4px solid #0B0;
     float: left;
