@@ -137,14 +137,14 @@ Plotter.prototype = {
                 });
                 
                 // Re-highlight
-                this.focus = plot[Math.floor(plot.length/2)];
-                this.Rehighlight();
+                this.Rehighlight(plot[Math.floor(plot.length/2)]);
             }
         }
     },
     
     // Re-highlight
-    Rehighlight: function() {
+    Rehighlight: function(focus) {
+        if (focus) this.focus = focus;
         this.RemoveHighlighting();
         this.Highlight(this.focus);
     },
@@ -162,8 +162,8 @@ Plotter.prototype = {
     },
     
     // Remove ship
-    RemoveShip: function(ship) {
-        var shipClass = ship.attr('class'),
+    RemoveShip: function(o) {
+        var shipClass = o.attr('class'),
             Ships = this.Ships;
         
         // What ship is being removed?
@@ -183,7 +183,7 @@ Plotter.prototype = {
         }
         
         // Re-highlight
-        this.Rehighlight();
+        this.Rehighlight(o);
     },
     
     // Selected ship
