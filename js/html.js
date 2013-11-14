@@ -19,7 +19,7 @@ var HTML = {
         template +=         '<section class="instructions">';
         template +=             '<h2>Plot Ships</h2>';
         template +=             '<ul>';
-        template +=                 '<li>Use the space key to adjust the orientation of the ship</li>';
+        template +=                 '<li>Use the space-bar key to adjust the orientation of the ship</li>';
         template +=                 '<li>Double click a ship to remove it</li>';
         template +=             '</ul>';
         template +=         '</section>';
