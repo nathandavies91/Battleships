@@ -130,6 +130,7 @@ Plotter.prototype = {
                 });
                 
                 // Save state with the ship
+                Trace.Information('Placed ship '+this.SelectedShip().name);
                 this.SelectedShip().Plot(plot);
             
                 // Ability to remove the ship
@@ -178,6 +179,7 @@ Plotter.prototype = {
                 // Remove the ship
                 $('.'+identifier).removeClass(identifier+' '+this.shipClass);
                 Ships[ship].Remove();
+                Trace.Information('Removed ship '+Ships[ship].name);
                 
                 break;
             }

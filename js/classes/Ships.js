@@ -6,6 +6,7 @@
 
 function Ship() { Trace.Information('New Ship()'); }
 Ship.prototype = {
+    name: 'Ship',
     class: 'ship',
     plot: null,
     
@@ -39,6 +40,7 @@ AircraftCarrier.prototype = $.extend(
     false,
     Ship.prototype,
     {
+        name: 'Aircraft Carrier',
         class: 'aircraft',
         size: 5
     }
@@ -58,6 +60,7 @@ Battleship.prototype = $.extend(
     false,
     Ship.prototype,
     {
+        name: 'Battleship',
         class: 'battleship',
         size: 4
     }
@@ -77,6 +80,7 @@ Submarine.prototype = $.extend(
     false,
     Ship.prototype,
     {
+        name: 'Submarine',
         class: 'submarine',
         size: 3
     }
@@ -96,6 +100,7 @@ Destroyer.prototype = $.extend(
     false,
     Ship.prototype,
     {
+        name: 'Destroyer',
         class: 'destroyer',
         size: 3
     }
@@ -115,6 +120,7 @@ PatrolBoat.prototype = $.extend(
     false,
     Ship.prototype,
     {
+        name: 'Patrol',
         class: 'patrol',
         size: 2
     }
