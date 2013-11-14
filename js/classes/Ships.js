@@ -6,6 +6,7 @@
 
 function Ship() { Trace.Information('New Ship()'); }
 Ship.prototype = {
+    class: 'ship',
     plot: null,
     
     // Has this been plotted?
@@ -19,13 +20,18 @@ Ship.prototype = {
  * AircraftCarrier
  */
 
-function AircraftCarrier() { Trace.Information('New AircraftCarrier()'); }
+function AircraftCarrier() {
+    Trace.Information('New AircraftCarrier()');
+    Ship.apply(this);
+}
+
 AircraftCarrier.prototype = $.extend(
+    false,
+    Ship.prototype,
     {
         class: 'aircraft',
         size: 5
-    },
-    Ship.prototype
+    }
 );
 
 
@@ -33,13 +39,18 @@ AircraftCarrier.prototype = $.extend(
  * Battleship
  */
 
-function Battleship() { Trace.Information('New Battleship()'); }
+function Battleship() {
+    Trace.Information('New Battleship()');
+    Ship.apply(this);
+}
+
 Battleship.prototype = $.extend(
+    false,
+    Ship.prototype,
     {
         class: 'battleship',
         size: 4
-    },
-    Ship.prototype
+    }
 );
 
 
@@ -47,13 +58,18 @@ Battleship.prototype = $.extend(
  * Submarine
  */
 
-function Submarine() { Trace.Information('New Submarine()'); }
+function Submarine() {
+    Trace.Information('New Submarine()');
+    Ship.apply(this);
+}
+
 Submarine.prototype = $.extend(
+    false,
+    Ship.prototype,
     {
         class: 'submarine',
         size: 3
-    },
-    Ship.prototype
+    }
 );
 
 
@@ -61,13 +77,18 @@ Submarine.prototype = $.extend(
  * Destroyer
  */
 
-function Destroyer() { Trace.Information('New Destroyer()'); }
+function Destroyer() {
+    Trace.Information('New Destroyer()');
+    Ship.apply(this);
+}
+
 Destroyer.prototype = $.extend(
+    false,
+    Ship.prototype,
     {
         class: 'destroyer',
         size: 3
-    },
-    Ship.prototype
+    }
 );
 
 
@@ -75,11 +96,16 @@ Destroyer.prototype = $.extend(
  * PatrolBoat
  */
 
-function PatrolBoat() { Trace.Information('New PatrolBoat()'); }
+function PatrolBoat() {
+    Trace.Information('New PatrolBoat()');
+    Ship.apply(this);
+}
+
 PatrolBoat.prototype = $.extend(
+    false,
+    Ship.prototype,
     {
         class: 'patrol',
         size: 2
-    },
-    Ship.prototype
+    }
 );
