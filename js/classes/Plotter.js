@@ -108,27 +108,29 @@ Plotter.prototype = {
     
     // Place ship
     PlaceShip: function() {
-        var clear = true,
-            plot = new Array();
-        
-        // Make sure this ship isn't overlapping another
-        $(this.block+'.'+this.highlightClass).each(function() {
-            if ($(this).hasClass(Plotter.prototype.shipClass))
-                clear = false;
-        });
-        if (clear) {
-            $(this.block+'.'+this.highlightClass).each(function() {
-                // Toggle class
-                $(this).toggleClass(Plotter.prototype.highlightClass
-                                    +' '+Plotter.prototype.shipClass
-                                    +' '+Plotter.prototype.SelectedShip().class);
-                
-                // Store the block
-                plot[plot.length] = $(this);
-            });
+        if (this.SelectedShip()) {
+            var clear = true,
+                plot = new Array();
             
-            // Save state with the ship
-            this.SelectedShip().plot = plot;
+            // Make sure this ship isn't overlapping another
+            $(this.block+'.'+this.highlightClass).each(function() {
+                if ($(this).hasClass(Plotter.prototype.shipClass))
+                    clear = false;
+            });
+            if (clear) {
+                $(this.block+'.'+this.highlightClass).each(function() {
+                    // Toggle class
+                    $(this).toggleClass(Plotter.prototype.highlightClass
+                                        +' '+Plotter.prototype.shipClass
+                                        +' '+Plotter.prototype.SelectedShip().class);
+                    
+                    // Store the block
+                    plot[plot.length] = $(this);
+                });
+                
+                // Save state with the ship
+                this.SelectedShip().plot = plot;
+            }
         }
     },
     
