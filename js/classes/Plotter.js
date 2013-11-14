@@ -169,9 +169,15 @@ Plotter.prototype = {
         // What ship is being removed?
         for (var ship in Ships) {
             if (shipClass.indexOf(Ships[ship].class) != -1) {
+                var identifier = Ships[ship].class;
+                
+                // Update orientation to match the ship
+                Plotter.prototype.vertical = ($('.'+identifier).next().is('.'+identifier)) ? false : true;
+                
                 // Remove the ship
-                $('.'+Ships[ship].class).removeClass(Ships[ship].class+' '+this.shipClass);
+                $('.'+identifier).removeClass(identifier+' '+this.shipClass);
                 Ships[ship].Remove();
+                
                 break;
             }
         }
