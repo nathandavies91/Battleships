@@ -18,8 +18,8 @@ function Plotter() {
     });
     
     // Place ship
-    $(this.grid).bind('click', function() {
-        Plotter.prototype.PlaceShip();
+    $(this.block).bind('click', function() {
+        Plotter.prototype.PlaceShip($(this));
     });
     
     // Change orientation state when space bar has been pressed
@@ -39,6 +39,7 @@ Plotter.prototype = {
     focus: null,
     grid: '#local .grid',
     highlightClass: 'highlight',
+    hint: null,
     shipClass: 'ship',
     vertical: true,
     
@@ -106,7 +107,7 @@ Plotter.prototype = {
     },
     
     // Place ship
-    PlaceShip: function() {
+    PlaceShip: function(focus) {
         if (this.SelectedShip()) {
             var clear = true,
                 plot = new Array();
@@ -137,7 +138,7 @@ Plotter.prototype = {
                 });
                 
                 // Re-highlight
-                this.Rehighlight(plot[Math.floor(plot.length/2)]);
+                this.Rehighlight(focus);
             }
         }
     },
