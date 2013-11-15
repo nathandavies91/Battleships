@@ -69,19 +69,51 @@ Game.prototype = {
     EnemyMissile: function(coordinates) {
         if (!this.shooter.IsUsersTurn()) {
             var o = $('#local .grid .row:nth-child('+coordinates.y+') .block:nth-child('+coordinates.x+')'),
-                missileClass;
+                result;
             
             // Contact? Or did the missile just sink into the sea
-            if (o.is('.ship')) missileClass = 'hit';
-            else missileClass = 'miss';
+            if (o.is('.ship')) result = 'hit';
+            else result = 'miss';
             
-            // Update the grid, and peer
-            o.addClass(missileClass);
-            PeerHandler.Send({result:missileClass,coordinates:coordinates});
+            // Update the grid
+            o.addClass(result);
+            
+            // I hope the user is alright; lets just check to make sure they are not dead
+            if (!$('.ship:not(.hit)').length) {
+                this.GameOverview('lost');
+                result = 'dead';
+            }
+            
+            // Update the peer
+            PeerHandler.Send({result:result,coordinates:coordinates});
             
             // Toggle user
             this.shooter.ToggleUsersTurn();
         }
+    },
+    
+    // Game overview
+    GameOverview: function(state) {
+        Trace.Information('Game over: local peer '+state);
+        
+        // Update the score
+        if (state == 'won') {
+            this.localGameScore++;
+            $('#local .score span:not(.title)').html(this.localGameScore);
+        }
+        else {
+            this.remoteGameScore++;
+            $('#remote .score span:not(.title)').html(this.remoteGameScore);
+        }
+        
+        // fade out grids
+        // inactivate grids
+        
+        // you won
+        // you lost
+        
+        // New round?
+        //
     },
     
     // Handle data
@@ -109,8 +141,15 @@ Game.prototype = {
             this.EnemyMissile(data.missile);
         
         // Missile result
-        if (data.result)
+        if (data.result) {
+            // Is it game over?
+            if (data.result == 'dead') {
+                this.GameOverview('won');
+                data.result = 'hit';
+            }
+            
             this.shooter.Result(data);
+        }
     },
     
     // Show local game board

@@ -242,7 +242,7 @@ h2 {
     text-align: center;
     width: 161px;
 }
-.board .score span {
+.board .score span.title {
     font-size: .15em;
     left: 6px;
     line-height: 1em;
