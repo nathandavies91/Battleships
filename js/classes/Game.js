@@ -106,11 +106,16 @@ Game.prototype = {
             $('#remote .score span:not(.title)').html(this.remoteGameScore);
         }
         
-        // fade out grids
-        // inactivate grids
+        // Fade out
+        $('.grid').fadeTo('slow', .4);
         
-        // you won
-        // you lost
+        // Who won/lost?
+        $('.board').each(function() {
+            $(this).append(Mustache.render(HTML.GameOverview(), {
+                local: ($(this).attr('id') == 'local'),
+                won: (state == 'won')
+            }));
+        });
         
         // New round?
         //

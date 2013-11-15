@@ -178,21 +178,6 @@ h2 {
     border-bottom: 1px dashed #9AE2E2;
 }
 
-.board .plotting {
-    height: 164px;
-    margin-top: -2px;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    width: 100%;
-}
-.board .plotting > * {
-    margin: 0 15%;
-}
-.board .plotting h2 ~ * {
-    margin-top: 2em;
-}
-
 .board .instructions {
     height: 87px;
     left: 377px;
@@ -210,22 +195,49 @@ h2 {
     margin-top: .3em;
 }
 
-.board #ready {
+.board .overview, .board .plotting {
+    height: 164px;
+    margin-top: -2px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+.board .overview > *, .board .plotting > * {
+    margin: 0 15%;
+}
+.board .overview h2 {
+    font-size: 4em;
+}
+.board .overview h2 ~ * {
+    margin-top: 1em;
+}
+
+.board .plotting h2 ~ * {
+    margin-top: 2em;
+}
+
+.board #playagain, .board #ready {
     background: red;
     cursor: pointer;
+    display: inline-block;
     font-size: 1.5em;
     height: 30px;
-    left: 389px;
     line-height: 30px;
     padding: 10px;
+}
+
+.board #ready {
+    display: block;
+    left: 389px;
     position: absolute;
     top: 105px;
-    transition: all .3s;
 }
 .board #ready.disabled {
     background: grey;
     cursor: default;
     opacity: .8;
+    transition: all .3s;
 }
 
 .board .score, .board .video {
@@ -272,6 +284,11 @@ h2 {
 #remote.board {
     left: auto;
     right: 0;
+}
+
+#remote.board .overview {
+    height: 80px;
+    margin-top: 40px;
 }
 
 #remote.board .score, #remote.board .video {

@@ -40,6 +40,21 @@ var HTML = {
         return template;
     },
     
+    // Game overview
+    GameOverview: function() {
+        var template = '';
+        template += '<div class="overview">';
+        template +=     '<h2>';
+        template +=         '{{#local}}You {{#won}}Won{{/won}}{{^won}}Lost{{/won}}{{/local}}';
+        template +=         '{{^local}}They {{#won}}Lost{{/won}}{{^won}}Won{{/won}}{{/local}}';
+        template +=     '</h2>';
+        template +=     '{{#local}}';
+        template +=         '<div id="playagain">Play again &raquo;</div>';
+        template +=     '{{/local}}';
+        template += '</div>';
+        return template;
+    },
+    
     // Invite screen
     InviteScreen: function() {
         var template = '';
