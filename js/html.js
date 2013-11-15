@@ -25,7 +25,15 @@ var HTML = {
         template +=         '</section>';
         template +=         '<div id="ready" class="disabled">Ready &raquo;</div>';
         template +=     '{{/local}}';
-        template +=     '<section class="grid">';
+        template +=     '{{^local}}';
+        template +=         '{{^ready}}';
+        template +=             '<section class="plotting">';
+        template +=                 '<h2>Waiting for other player</h2>';
+        template +=                 '<p>The other player is still plotting their ships</p>';
+        template +=             '</section>';
+        template +=         '{{/ready}}';
+        template +=     '{{/local}}';
+        template +=     '<section class="grid"{{^local}}{{^ready}} style="display:none;"{{/ready}}{{/local}}>';
         template +=         '{{#grid}}<div class="row">{{#.}}<div class="block"></div>{{/.}}</div>{{/grid}}';
         template +=     '</section>';
         template += '</section>';

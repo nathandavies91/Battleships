@@ -186,8 +186,23 @@ h2 {
     background: rgba(255, 0, 0, .4);
 }
 
+.board .plotting {
+    height: 164px;
+    margin-top: -2px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+.board .plotting > * {
+    margin: 0 15%;
+}
+.board .plotting h2 ~ * {
+    margin-top: 2em;
+}
+
 .board .instructions {
-    height: 93px;
+    height: 87px;
     left: 377px;
     overflow: auto;
     padding: 6px 12px;

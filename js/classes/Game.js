@@ -71,6 +71,7 @@ Game.prototype = {
     localGameScore: 0,
     localMediaStream: null,
     plotter: null,
+    plottingNotification: '#remote .plotting',
     remoteGameScore: 0,
     remoteMediaStream: null,
     
@@ -79,6 +80,12 @@ Game.prototype = {
         // State change
         if (data.state) {
             PeerHandler.RemoteState(data.state);
+            
+            // If the remote peer is ready, remove the plotting notification
+            if (data.state == 'ready') {
+                $(this.plottingNotification).remove();
+                $('#remote .grid').fadeIn('slow');
+            }
         }
     },
     
@@ -141,7 +148,7 @@ Game.prototype = {
         new GameBoard($.extend({
             id: 'remote',
             score: this.remoteGameScore,
-            state: PeerHandler.remoteState
+            ready: (PeerHandler.remoteState == 'ready')
         }, properties));
         this.gridController.Resize();
     },
