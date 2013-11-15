@@ -9,6 +9,7 @@ var Shooter = function() {
     
     // Properties
     this.aimClass = 'aim';
+    this.shotClass = 'shot';
     this.usersTurn = true;
 }
 
@@ -44,6 +45,17 @@ Shooter.prototype = {
         o.removeClass(this.aimClass);
     },
     
+    // Result
+    Result: function(data) {
+        // Stop the loader
+        Loader.Stop();
+        
+        // Update the block
+        $('#remote .grid .'+this.shotClass)
+            .removeClass(this.shotClass)
+            .addClass(data.result);
+    },
+    
     // Shoot
     Shoot: function(o) {
         if (this.Ready()) {
@@ -53,7 +65,11 @@ Shooter.prototype = {
                 y: o.parent().index()+1
             }});
             
-            // Switch users
+            // Start the loader
+            Loader.Start();
+            
+            // Toggle classes, and users
+            o.toggleClass(this.aimClass+' '+this.shotClass);
             this.ToggleUsersTurn();
         }
     },

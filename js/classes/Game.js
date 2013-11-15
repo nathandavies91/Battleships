@@ -65,6 +65,25 @@ var Game = function() {
 }
 
 Game.prototype = {
+    // Enemy missile
+    EnemyMissile: function(coordinates) {
+        if (!this.shooter.IsUsersTurn()) {
+            var o = $('#local .grid .row:nth-child('+coordinates.y+') .block:nth-child('+coordinates.x+')'),
+                missileClass;
+            
+            // Contact? Or did the missile just sink into the sea
+            if (o.is('.ship')) missileClass = 'hit';
+            else missileClass = 'miss';
+            
+            // Update the grid, and peer
+            o.addClass(missileClass);
+            PeerHandler.connection.send({result:missileClass,coordinates:coordinates});
+            
+            // Toggle user
+            this.shooter.ToggleUsersTurn();
+        }
+    },
+    
     // Handle data
     HandleData: function(data) {
         // State change
@@ -83,12 +102,12 @@ Game.prototype = {
         }
         
         // Missile
-        if (data.missile && !this.shooter.IsUsersTurn()) {
-            // MISSILE
-            
-            // Toggle user's turn
-            this.shooter.ToggleUsersTurn();
-        }
+        if (data.missile && !this.shooter.IsUsersTurn())
+            this.EnemyMissile(data.missile);
+        
+        // Missile result
+        if (data.result)
+            this.shooter.Result(data);
     },
     
     // Show local game board
