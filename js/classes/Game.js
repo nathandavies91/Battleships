@@ -6,7 +6,7 @@
 
 var Game = function() {
     Trace.Information('New Game()');
-    self = this;
+    var self = this;
     
     // Stop the loader
     Loader.Stop();
@@ -130,15 +130,15 @@ Game.prototype = {
     },
     
     // Peer handlers
-    PeerHandlers: function() {        
-        self = this;
+    PeerHandlers: function() {
+        var self = this;
         
         // Let remote peer know what state the local peer is in
         if (PeerHandler.Local.state)
             PeerHandler.Local.UpdateState(PeerHandler.Local.state);
         
         // Accept video call
-        this.VideoCall();
+        self.VideoCall();
         PeerHandler.peer.on('call', function(call) {
             PeerHandler.call = call;
             PeerHandler.call.answer();
@@ -153,7 +153,7 @@ Game.prototype = {
         PeerHandler.connection.on('error', function(error) { PeerHandler.Error(error); });
         
         // Show the game board?
-        this.RemoteGameBoard();
+        self.RemoteGameBoard();
     },
     
     // Show remote game board
@@ -176,8 +176,8 @@ Game.prototype = {
     
     // Video call
     VideoCall: function() {
-        self = this;
-        if (this.localMediaStream && PeerHandler.connection) {
+        var self = this;
+        if (self.localMediaStream && PeerHandler.connection) {
             Trace.Information('Sending media stream to remote peer...');
             PeerHandler.peer.call(PeerHandler.connection.peer, self.localMediaStream.stream);
         }
