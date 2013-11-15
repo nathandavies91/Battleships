@@ -11,44 +11,33 @@ var Plotter = function() {
     // Constants
     var ENTER_KEY = 32;
     
+    // Properties
+    this.blockClass = '#local .grid .block';
+    this.gridClass = '#local .grid';
+    this.highlightClass = 'highlight';
+    this.readyId = '#ready';
+    this.shipClass = 'ship';
+    this.vertical = true;
+    
     // Highlight ship plot area
-    $(this.blockClass).bind('mouseover', function() {
-        self.Highlight($(this));
-    });
+    $(this.blockClass).bind('mouseover', function() { self.Highlight($(this)); });
     
     // Clean up the highlighting
-    $(this.blockClass).bind('mouseout', function() {
-        self.RemoveHighlighting();
-    });
+    $(this.blockClass).bind('mouseout', function() { self.RemoveHighlighting(); });
     
     // Place ship
-    $(this.blockClass).bind('click', function() {
-        self.PlaceShip($(this));
-    });
+    $(this.blockClass).bind('click', function() { self.PlaceShip($(this)); });
     
     // Change orientation state when space bar has been pressed
     $('body').bind('keyup', function(e) {
-        if (e.keyCode == ENTER_KEY)
-            self.ChangeOrientation();
+        if (e.keyCode == ENTER_KEY) self.ChangeOrientation();
     });
     
     // A bit of OCD
-    $(this.gridClass).bind('mouseout', function() {
-        self.RemoveFocus();
-    });
+    $(this.gridClass).bind('mouseout', function() { self.RemoveFocus(); });
 }
 
 Plotter.prototype = {
-    blockClass: '#local .grid .block',
-    focus: null,
-    gridClass: '#local .grid',
-    highlightClass: 'highlight',
-    hint: null,
-    instructionsClass: '#local .instructions',
-    readyId: '#ready',
-    shipClass: 'ship',
-    vertical: true,
-    
     // Change orientation
     ChangeOrientation: function() {
         this.vertical = !this.vertical;
@@ -63,7 +52,7 @@ Plotter.prototype = {
     // Enable the ready button
     EnableReady: function() {
         var self = this;
-        $('#ready').removeClass('disabled').bind('click', function() {
+        $(this.readyId).removeClass('disabled').bind('click', function() {
             self.FinishPlotting();
         });
     },
@@ -78,7 +67,7 @@ Plotter.prototype = {
         $('body').unbind('keyup');
         
         // Remove elements
-        $(this.readyId+','+this.instructionsClass).remove();
+        $(this.readyId+',#local .instructions').remove();
         
         // Update state
         PeerHandler.Local.UpdateState('ready');

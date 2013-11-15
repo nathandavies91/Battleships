@@ -13,8 +13,6 @@ var RemoteMediaStream = function(stream) {
 }
 
 RemoteMediaStream.prototype = {
-    stream: null,
-    
     // Display the stream
     Display: function() {
         $('#remote video').attr('src', this.ObjectURL());

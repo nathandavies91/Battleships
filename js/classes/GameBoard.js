@@ -7,16 +7,30 @@
 var GameBoard = function(o) {
     Trace.Information('New GameBoard('+o.id+')');
     if (o.id == 'local' || o.id == 'remote') {
-        // Grid
+        // Properties
+        this.options = o;
+        
+        // Display the game board
+        this.Display();
+    }
+}
+
+GameBoard.prototype = {
+    // Display
+    Display: function() {
+        $('#'+this.options.id).remove();
+        $('body').append(Mustache.render(HTML.GameBoard(), $.extend({
+            grid: this.Grid(),
+            local: (this.options.id == 'local') ? true : false
+        },this.options)));
+    },
+    
+    // Grid
+    Grid: function() {
         var grid = Array(10);
         for (var i = 0; i < 10; i++)
             grid[i] = Array(10);
         
-        // Display the game board
-        $('#'+o.id).remove();
-        $('body').append(Mustache.render(HTML.GameBoard(), $.extend({
-            grid: grid,
-            local: (o.id == 'local') ? true : false
-        },o)));
+        return grid;
     }
 }

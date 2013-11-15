@@ -8,14 +8,12 @@ var Hint = function(id, content) {
     Trace.Information('New Hint('+id+', '+content+')');
     var self = this;
     
+    // Properties
+    this.id = id;
+    this.content = content;
+    
     // Show the hint
-    this.element = $(Mustache.render(HTML.div, {
-        id: id,
-        class: 'hint',
-        content: content
-    }))
-    .append(Mustache.render(HTML.div,{class:'pointer'}))
-    .insertAfter('h1');
+    this.ShowHint();
     
     // Remove on click
     this.element.on('click', function() {
@@ -24,12 +22,21 @@ var Hint = function(id, content) {
 }
 
 Hint.prototype = {
-    element: null,
-    
     // Remove the element
     Remove: function() {
         this.element.fadeOut(function() {
             $(this).remove();
         });
+    },
+    
+    // Show the hint
+    ShowHint: function() {
+        this.element = $(Mustache.render(HTML.div, {
+            id: this.id,
+            class: 'hint',
+            content: this.content
+        }))
+        .append(Mustache.render(HTML.div,{class:'pointer'}))
+        .insertAfter('h1');
     }
 }

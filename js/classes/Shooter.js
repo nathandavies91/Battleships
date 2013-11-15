@@ -6,13 +6,13 @@
 
 var Shooter = function() {
     Trace.Information('New Shooter()');
+    
+    // Properties
+    this.aimClass = 'aim';
+    this.usersTurn = true;
 }
 
 Shooter.prototype = {
-    aimClass: 'aim',
-    blockClass: '#remote .grid .block',
-    usersTurn: true,
-    
     // Highlight
     Highlight: function(o) {
         // Make sure both peers are ready, and it's the user's turn
@@ -22,11 +22,12 @@ Shooter.prototype = {
     
     // Initiate
     Initiate: function() {
-        $(this.blockClass)
+        var self = this;
+        $('#remote .grid .block')
             .unbind('shoot mouseover mouseout')
-            .bind('click', function() { Shooter.prototype.Shoot($(this)); })
-            .bind('mouseover', function() { Shooter.prototype.Highlight($(this)); })
-            .bind('mouseout', function() { Shooter.prototype.RemoveHighlighting($(this)); });
+            .bind('click', function() { self.Shoot($(this)); })
+            .bind('mouseover', function() { self.Highlight($(this)); })
+            .bind('mouseout', function() { self.RemoveHighlighting($(this)); });
     },
     
     // Is user's turn?

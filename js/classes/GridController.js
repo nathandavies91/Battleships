@@ -6,13 +6,13 @@
 
 var GridController = function() {
     Trace.Information('New GridController()');
+    
+    // Properties
+    this.navigationHeight = 162;
+    this.padding = 20;
 }
 
 GridController.prototype = {
-    navigationHeight: 162,
-    id: '.board .grid',
-    padding: 20,
-    
     // Resize
     Resize: function() {
         // Available height and width
@@ -25,7 +25,7 @@ GridController.prototype = {
             gridTopMargin = gridSideMargin + (this.navigationHeight / 2);
         
         // Resize grid containers
-        $(this.id).each(function() {
+        $('.board .grid').each(function() {
             $(this).css({
                 'margin-left': gridSideMargin,
                 'margin-top': gridTopMargin,
@@ -35,7 +35,7 @@ GridController.prototype = {
         });
         
         // Resize grid blocks
-        $(this.id + ' .row .block').css({
+        $('.board .grid .row .block').css({
             'height': (gridSize - 11) / 10,
             'width': (gridSize - 11) / 10
         });

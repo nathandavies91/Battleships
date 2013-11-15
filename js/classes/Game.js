@@ -11,38 +11,24 @@ var Game = function() {
     // Stop the loader
     Loader.Stop();
     
+    // Properties
+    this.localGameScore = 0;
+    this.remoteGameScore = 0;
+    
     // Required resources
     this.gridController = new GridController();
     this.localMediaStream = new LocalMediaStream(self);
     this.shooter = new Shooter();
     
-    // Responsive grid
-    $(window).bind('resize', function() { self.gridController.Resize(); });
-    
     // Show the local player's game board
     this.LocalGameBoard();
     
     // Show an invite screen, unless already in a lobby
-    if (!PeerHandler.connection) {
-        $('body').append(Mustache.render(HTML.InviteScreen(), {
-            session: Location.url + '?session=' + PeerHandler.peer.id
-        }));
-        
-        // Copy link
-        $('#invitelink').zclip({
-            path: './js/lib/zclip.swf',
-            copy: $('#invitelink p').html(),
-            afterCopy: function() {
-                $('#invitelink .copy').html('Copied');
-            }
-        });
-    }
+    if (!PeerHandler.connection)
+        this.ShowInviteScreen();
     
-    // Peer connection
-    if (PeerHandler.connection) {
-        this.PeerHandlers();
-        Shooter.prototype.SetUsersTurn(false);
-    }
+    // Peer connection and handlers
+    if (PeerHandler.connection) this.PeerHandlers();
     PeerHandler.peer.on('connection', function(connection) {
         if (!PeerHandler.connection) {
             // Store the connection
@@ -65,6 +51,9 @@ var Game = function() {
         }
     });
     
+    // Responsive grid
+    $(window).bind('resize', function() { self.gridController.Resize(); });
+    
     // Are you sure you want to quit?
     $(window).bind('beforeunload', function() {
         return 'Navigating away from this page will destroy the game session.';
@@ -72,15 +61,6 @@ var Game = function() {
 }
 
 Game.prototype = {
-    gridController: null,
-    localGameScore: 0,
-    localMediaStream: null,
-    plotter: null,
-    plottingNotification: '#remote .plotting',
-    remoteGameScore: 0,
-    remoteMediaStream: null,
-    shooter: null,
-    
     // Handle data
     HandleData: function(data) {
         // State change
@@ -90,7 +70,7 @@ Game.prototype = {
             // If the remote peer is ready
             if (PeerHandler.Remote.IsReady()) {
                 // Remove plotting notification and show the grid
-                $(this.plottingNotification).remove();
+                $('#remote .plotting').remove();
                 $('#remote .grid').fadeIn('slow');
                 
                 // Initiate the shooter
@@ -172,6 +152,22 @@ Game.prototype = {
         
         // If the user is ready, initiate the shooter
         if (PeerHandler.Remote.IsReady()) Shooter.prototype.Initiate();
+    },
+    
+    // Show invite screen
+    ShowInviteScreen: function() {
+        $('body').append(Mustache.render(HTML.InviteScreen(), {
+            session: Location.url + '?session=' + PeerHandler.peer.id
+        }));
+        
+        // Copy link
+        $('#invitelink').zclip({
+            path: './js/lib/zclip.swf',
+            copy: $('#invitelink p').html(),
+            afterCopy: function() {
+                $('#invitelink .copy').html('Copied');
+            }
+        });
     },
     
     // Video call
