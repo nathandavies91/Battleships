@@ -63,7 +63,9 @@ var Utilities = {
     PeerHandler: {
         call: null,
         connection: null,
+        localState: null,
         peer: null,
+        remoteState: null,
         
         // Disconnected
         Disconnected: function() {
@@ -76,6 +78,20 @@ var Utilities = {
         Error: function(error) {
             Trace.Error(error);
             Utilities.InGameError('Technical difficulties =(');
+        },
+        
+        // Local state change
+        LocalState: function(state) {
+            PeerHandler.localState = state;
+            if (PeerHandler.connection) PeerHandler.connection.send({state:state});
+            
+            Trace.Information('Set local state to '+state);
+        },
+        
+        // Remote state change
+        RemoteState: function(state) {
+            PeerHandler.remoteState = state;
+            Trace.Information('Set remote state to '+state);
         }
     },
     

@@ -74,6 +74,14 @@ Game.prototype = {
     remoteGameScore: 0,
     remoteMediaStream: null,
     
+    // Handle data
+    HandleData: function(data) {
+        // State change
+        if (data.state) {
+            PeerHandler.RemoteState(data.state);
+        }
+    },
+    
     // Show local game board
     LocalGameBoard: function() {
         // Hide the heading
@@ -93,12 +101,16 @@ Game.prototype = {
         
         // Plot ships
         this.plotter = new Plotter();
+        
+        // Update the local state
+        PeerHandler.LocalState('plotting');
     },
     
     // Peer handlers
     PeerHandlers: function() {        
-        // Show remote gameboard
-        this.RemoteGameBoard();
+        // Let remote peer know what state the local peer is in
+        if (PeerHandler.localState)
+            PeerHandler.LocalState(PeerHandler.localState);
         
         // Accept video call
         this.VideoCall();
@@ -110,14 +122,13 @@ Game.prototype = {
             });
         });
         
-        // Handle received data
-        PeerHandler.connection.on('data', function(data) {
-            //
-        });
-        
-        // Lost connect, or an error occurred
+        // Handle received data, lost connection or error
+        PeerHandler.connection.on('data', function(data) { Game.prototype.HandleData(data); });
         PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
         PeerHandler.connection.on('error', function(error) { PeerHandler.Error(error); });
+        
+        // Show the game board?
+        this.RemoteGameBoard();
     },
     
     // Show remote game board
@@ -129,7 +140,8 @@ Game.prototype = {
         
         new GameBoard($.extend({
             id: 'remote',
-            score: this.remoteGameScore
+            score: this.remoteGameScore,
+            state: PeerHandler.remoteState
         }, properties));
         this.gridController.Resize();
     },

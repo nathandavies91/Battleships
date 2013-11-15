@@ -78,6 +78,9 @@ Plotter.prototype = {
         
         // Remove elements
         $(this.readyId+','+this.instructionsClass).remove();
+        
+        // Update state
+        PeerHandler.LocalState('ready');
     },
     
     // Highlight
