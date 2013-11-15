@@ -319,7 +319,9 @@ h2 {
 }
 .board .grid .row .block.miss {
     background: rgba(255, 255, 255, .2);
+    cursor: default;
 }
 .board .grid .row .block.hit {
     background: rgba(255, 0, 0, .4);
+    cursor: default;
 }
