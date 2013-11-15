@@ -5,34 +5,36 @@
  */
 
 var Plotter = function() {
-    var ENTER_KEY = 32;
-    
     Trace.Information('New Plotter()');
+    var self = this;
+    
+    // Constants
+    var ENTER_KEY = 32;
     
     // Highlight ship plot area
     $(this.blockClass).bind('mouseover', function() {
-        Plotter.prototype.Highlight($(this));
+        self.Highlight($(this));
     });
     
     // Clean up the highlighting
     $(this.blockClass).bind('mouseout', function() {
-        Plotter.prototype.RemoveHighlighting();
+        self.RemoveHighlighting();
     });
     
     // Place ship
     $(this.blockClass).bind('click', function() {
-        Plotter.prototype.PlaceShip($(this));
+        self.PlaceShip($(this));
     });
     
     // Change orientation state when space bar has been pressed
     $('body').bind('keyup', function(e) {
         if (e.keyCode == ENTER_KEY)
-            Plotter.prototype.ChangeOrientation();
+            self.ChangeOrientation();
     });
     
     // A bit of OCD
     $(this.gridClass).bind('mouseout', function() {
-        Plotter.prototype.RemoveFocus();
+        self.RemoveFocus();
     });
 }
 
@@ -50,8 +52,6 @@ Plotter.prototype = {
     // Change orientation
     ChangeOrientation: function() {
         this.vertical = !this.vertical;
-        
-        // Re-highlight
         this.Rehighlight();
     },
     
@@ -62,8 +62,9 @@ Plotter.prototype = {
     
     // Enable the ready button
     EnableReady: function() {
+        var self = this;
         $('#ready').removeClass('disabled').bind('click', function() {
-            Plotter.prototype.FinishPlotting();
+            self.FinishPlotting();
         });
     },
     
@@ -140,22 +141,23 @@ Plotter.prototype = {
     
     // Place ship
     PlaceShip: function(focus) {
+        var self = this;
+        
         if (this.SelectedShip()) {
             var clear = true,
                 plot = new Array();
             
             // Make sure this ship isn't overlapping another
             $(this.blockClass+'.'+this.highlightClass).each(function() {
-                if ($(this).hasClass(Plotter.prototype.shipClass))
+                if ($(this).hasClass(self.shipClass))
                     clear = false;
             });
             if (clear) {
                 $(this.blockClass+'.'+this.highlightClass).each(function() {
                     // Toggle class
                     $(this)
-                        .addClass(Plotter.prototype.shipClass
-                                  +' '+Plotter.prototype.SelectedShip().class)
-                        .removeClass(Plotter.prototype.highlightClass);
+                        .addClass(self.shipClass+' '+self.SelectedShip().class)
+                        .removeClass(self.highlightClass);
                     
                     // Store the block
                     plot[plot.length] = $(this);
@@ -167,7 +169,7 @@ Plotter.prototype = {
             
                 // Ability to remove the ship
                 $(this.blockClass+'.'+this.shipClass).unbind('dblclick').bind('dblclick', function() {
-                    Plotter.prototype.RemoveShip($(this));
+                    self.RemoveShip($(this));
                 });
                 
                 // Re-highlight
@@ -194,8 +196,9 @@ Plotter.prototype = {
     
     // Remove highlighting
     RemoveHighlighting: function() {
+        var self = this;
         $(this.blockClass+'.'+this.highlightClass).each(function() {
-            $(this).removeClass(Plotter.prototype.highlightClass);
+            $(this).removeClass(self.highlightClass);
         });
     },
     
@@ -210,7 +213,7 @@ Plotter.prototype = {
                 var identifier = Ships[ship].class;
                 
                 // Update orientation to match the ship
-                Plotter.prototype.vertical = ($('.'+identifier).next().is('.'+identifier)) ? false : true;
+                this.vertical = ($('.'+identifier).next().is('.'+identifier)) ? false : true;
                 
                 // Remove the ship
                 $('.'+identifier).removeClass(identifier+' '+this.shipClass);
