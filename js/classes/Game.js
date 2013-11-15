@@ -96,6 +96,9 @@ Game.prototype = {
     GameOverview: function(state) {
         Trace.Information('Game over: local peer '+state);
         
+        // Update state
+        PeerHandler.Local.UpdateState(state);
+        
         // Update the score
         if (state == 'won') {
             this.localGameScore++;
