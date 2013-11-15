@@ -74,14 +74,14 @@ Game.prototype = {
                 $('#remote .grid').fadeIn('slow');
                 
                 // Initiate the shooter
-                Shooter.prototype.Initiate();
+                this.shooter.Initiate();
             }
         }
         
         // Missile
-        if (data.missile && !Shooter.prototype.IsUsersTurn()) {
+        if (data.missile && !this.shooter.IsUsersTurn()) {
             // Toggle user's turn
-            Shooter.prototype.ToggleUsersTurn();
+            this.shooter.ToggleUsersTurn();
         }
     },
     
@@ -151,7 +151,7 @@ Game.prototype = {
         this.gridController.Resize();
         
         // If the user is ready, initiate the shooter
-        if (PeerHandler.Remote.IsReady()) Shooter.prototype.Initiate();
+        if (PeerHandler.Remote.IsReady()) this.shooter.Initiate();
     },
     
     // Show invite screen
