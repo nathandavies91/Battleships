@@ -66,6 +66,9 @@ Plotter.prototype = {
         $(this.readyId).unbind('click');
         $('body').unbind('keyup');
         
+        // Correct cursor
+        $('#local .grid .ship').css('cursor', 'default');
+        
         // Remove elements
         $(this.readyId+',#local .instructions').remove();
         

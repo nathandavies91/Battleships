@@ -298,6 +298,7 @@ h2 {
 /* Missiles */
 .board .grid .row .block.aim, .board .grid .row .block.shot {
     background: rgba(0, 0, 0, .2);
+    cursor: pointer;
 }
 .board .grid .row .block.miss {
     background: rgba(255, 255, 255, .2);
