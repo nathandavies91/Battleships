@@ -6,9 +6,8 @@
 
 var GameBoard = function(o) {
     Trace.Information('New GameBoard('+o.id+')');
-    
-    // Grid
     if (o.id == 'local' || o.id == 'remote') {
+        // Grid
         var grid = Array(10);
         for (var i = 0; i < 10; i++)
             grid[i] = Array(10);

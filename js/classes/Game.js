@@ -7,18 +7,21 @@
 var Game = function() {
     Trace.Information('New Game()');
     
+    var self = this;
+    
     // Stop the loader
     Loader.Stop();
     
     // Required resources
-    Game.prototype.gridController = new GridController();
-    Game.prototype.localMediaStream = new LocalMediaStream();
+    self.gridController = new GridController();
+    self.localMediaStream = new LocalMediaStream();
+    self.shooter = new Shooter();
     
     // Responsive grid
-    $(window).bind('resize', function() { Game.prototype.gridController.Resize(); });
+    $(window).bind('resize', function() { self.gridController.Resize(); });
     
     // Show the local player's game board
-    this.LocalGameBoard();
+    self.LocalGameBoard();
     
     // Show an invite screen, unless already in a lobby
     if (!PeerHandler.connection) {
@@ -37,7 +40,10 @@ var Game = function() {
     }
     
     // Peer connection
-    if (PeerHandler.connection) this.PeerHandlers();
+    if (PeerHandler.connection) {
+        self.PeerHandlers();
+        self.shooter.SetUsersTurn(false);
+    }
     PeerHandler.peer.on('connection', function(connection) {
         if (!PeerHandler.connection) {
             // Store the connection
@@ -48,7 +54,7 @@ var Game = function() {
                 Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
                 connection.send({state:'initiation'});
                 
-                Game.prototype.PeerHandlers();
+                self.PeerHandlers();
             });
         }
         else {
@@ -74,18 +80,29 @@ Game.prototype = {
     plottingNotification: '#remote .plotting',
     remoteGameScore: 0,
     remoteMediaStream: null,
+    shooter: null,
     
     // Handle data
     HandleData: function(data) {
         // State change
         if (data.state) {
-            PeerHandler.RemoteState(data.state);
+            PeerHandler.Remote.UpdateState(data.state);
             
-            // If the remote peer is ready, remove the plotting notification
-            if (data.state == 'ready') {
+            // If the remote peer is ready
+            if (PeerHandler.Remote.IsReady()) {
+                // Remove plotting notification and show the grid
                 $(this.plottingNotification).remove();
                 $('#remote .grid').fadeIn('slow');
+                
+                // Initiate the shooter
+                this.shooter.Initiate();
             }
+        }
+        
+        // Missile
+        if (data.missile && !this.shooter.IsUsersTurn()) {
+            // Toggle user's turn
+            this.shooter.ToggleUsersTurn();
         }
     },
     
@@ -110,14 +127,14 @@ Game.prototype = {
         this.plotter = new Plotter();
         
         // Update the local state
-        PeerHandler.LocalState('plotting');
+        PeerHandler.Local.UpdateState('plotting');
     },
     
     // Peer handlers
     PeerHandlers: function() {        
         // Let remote peer know what state the local peer is in
-        if (PeerHandler.localState)
-            PeerHandler.LocalState(PeerHandler.localState);
+        if (PeerHandler.Local.state)
+            PeerHandler.Local.UpdateState(PeerHandler.Local.state);
         
         // Accept video call
         this.VideoCall();
@@ -148,16 +165,19 @@ Game.prototype = {
         new GameBoard($.extend({
             id: 'remote',
             score: this.remoteGameScore,
-            ready: (PeerHandler.remoteState == 'ready')
+            ready: PeerHandler.Remote.IsReady()
         }, properties));
         this.gridController.Resize();
+        
+        // If the user is ready, initiate the shooter
+        if (PeerHandler.Remote.IsReady()) this.shooter.Initiate();
     },
     
     // Video call
     VideoCall: function() {
         if (this.localMediaStream && PeerHandler.connection) {
             Trace.Information('Sending media stream to remote peer...');
-            PeerHandler.peer.call(PeerHandler.connection.peer, Game.prototype.localMediaStream.stream);
+            PeerHandler.peer.call(PeerHandler.connection.peer, this.localMediaStream.stream);
         }
     }
 }

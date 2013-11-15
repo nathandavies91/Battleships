@@ -80,7 +80,7 @@ Plotter.prototype = {
         $(this.readyId+','+this.instructionsClass).remove();
         
         // Update state
-        PeerHandler.LocalState('ready');
+        PeerHandler.Local.UpdateState('ready');
     },
     
     // Highlight
