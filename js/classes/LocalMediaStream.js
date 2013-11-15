@@ -4,33 +4,34 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-var LocalMediaStream = function() {
+var LocalMediaStream = function(game) {
     Trace.Information('New LocalMediaStream()');
+    var self = this;
     
     // Is the browser supported?
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (navigator.getUserMedia) {
         // Show hint
-        LocalMediaStream.prototype.hint = new Hint('mediaallow', 'Allow camera and microphone for video communication');
+        self.hint = new Hint('mediaallow', 'Allow camera and microphone for video communication');
         
         // Browser is supported, request for the user's media
         navigator.getUserMedia({audio:true,video:true},
            function(stream) {
                // Store the local stream
                Trace.Information('Granted access to the user\'s media');
-               LocalMediaStream.prototype.stream = stream;
-               LocalMediaStream.prototype.Display();
+               self.stream = stream;
+               self.Display();
                
                // Hide the hint
-               LocalMediaStream.prototype.hint.Remove();
+               self.hint.Remove();
                
                // Video call
-               Game.prototype.VideoCall();
+               game.VideoCall();
            },
            function(error) {
                // Damn! Oh well, just give the user a smiley face
                Trace.Warning('Error gathering user\'s media stream: '+error.name);
-               LocalMediaStream.prototype.hint.Remove();
+               self.hint.Remove();
            }
        );
     }

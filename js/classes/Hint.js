@@ -6,9 +6,10 @@
 
 var Hint = function(id, content) {
     Trace.Information('New Hint('+id+', '+content+')');
+    var self = this;
     
     // Show the hint
-    Hint.prototype.element = $(Mustache.render(HTML.div, {
+    self.element = $(Mustache.render(HTML.div, {
         id: id,
         class: 'hint',
         content: content
@@ -17,8 +18,8 @@ var Hint = function(id, content) {
     .insertAfter('h1');
     
     // Remove on click
-    Hint.prototype.element.on('click', function() {
-        Hint.prototype.Remove();
+    self.element.on('click', function() {
+        self.Remove();
     });
 }
 

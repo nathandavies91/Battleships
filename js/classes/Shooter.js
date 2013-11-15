@@ -15,7 +15,6 @@ Shooter.prototype = {
     
     // Highlight
     Highlight: function(o) {
-        window.alert(this.usersTurn);
         // Make sure both peers are ready, and it's the user's turn
         if (PeerHandler.Remote.IsReady() && PeerHandler.Local.IsReady() && this.usersTurn)
             o.addClass(this.aimClass);

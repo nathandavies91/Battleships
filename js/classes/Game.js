@@ -6,15 +6,14 @@
 
 var Game = function() {
     Trace.Information('New Game()');
-    
-    var self = this;
+    self = this;
     
     // Stop the loader
     Loader.Stop();
     
     // Required resources
     self.gridController = new GridController();
-    self.localMediaStream = new LocalMediaStream();
+    self.localMediaStream = new LocalMediaStream(self);
     self.shooter = new Shooter();
     
     // Responsive grid
@@ -42,7 +41,7 @@ var Game = function() {
     // Peer connection
     if (PeerHandler.connection) {
         self.PeerHandlers();
-        self.shooter.SetUsersTurn(false);
+        Shooter.prototype.SetUsersTurn(false);
     }
     PeerHandler.peer.on('connection', function(connection) {
         if (!PeerHandler.connection) {
@@ -95,14 +94,14 @@ Game.prototype = {
                 $('#remote .grid').fadeIn('slow');
                 
                 // Initiate the shooter
-                this.shooter.Initiate();
+                Shooter.prototype.Initiate();
             }
         }
         
         // Missile
-        if (data.missile && !this.shooter.IsUsersTurn()) {
+        if (data.missile && !Shooter.prototype.IsUsersTurn()) {
             // Toggle user's turn
-            this.shooter.ToggleUsersTurn();
+            Shooter.prototype.ToggleUsersTurn();
         }
     },
     
@@ -132,6 +131,8 @@ Game.prototype = {
     
     // Peer handlers
     PeerHandlers: function() {        
+        self = this;
+        
         // Let remote peer know what state the local peer is in
         if (PeerHandler.Local.state)
             PeerHandler.Local.UpdateState(PeerHandler.Local.state);
@@ -142,12 +143,12 @@ Game.prototype = {
             PeerHandler.call = call;
             PeerHandler.call.answer();
             PeerHandler.call.on('stream', function(stream) {
-                Game.prototype.remoteMediaStream = new RemoteMediaStream(stream);
+                self.remoteMediaStream = new RemoteMediaStream(stream);
             });
         });
         
         // Handle received data, lost connection or error
-        PeerHandler.connection.on('data', function(data) { Game.prototype.HandleData(data); });
+        PeerHandler.connection.on('data', function(data) { self.HandleData(data); });
         PeerHandler.connection.on('close', function() { PeerHandler.Disconnected(); });
         PeerHandler.connection.on('error', function(error) { PeerHandler.Error(error); });
         
@@ -170,14 +171,15 @@ Game.prototype = {
         this.gridController.Resize();
         
         // If the user is ready, initiate the shooter
-        if (PeerHandler.Remote.IsReady()) this.shooter.Initiate();
+        if (PeerHandler.Remote.IsReady()) Shooter.prototype.Initiate();
     },
     
     // Video call
     VideoCall: function() {
+        self = this;
         if (this.localMediaStream && PeerHandler.connection) {
             Trace.Information('Sending media stream to remote peer...');
-            PeerHandler.peer.call(PeerHandler.connection.peer, this.localMediaStream.stream);
+            PeerHandler.peer.call(PeerHandler.connection.peer, self.localMediaStream.stream);
         }
     }
 }
