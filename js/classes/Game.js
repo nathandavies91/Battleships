@@ -12,15 +12,15 @@ var Game = function() {
     Loader.Stop();
     
     // Required resources
-    self.gridController = new GridController();
-    self.localMediaStream = new LocalMediaStream(self);
-    self.shooter = new Shooter();
+    this.gridController = new GridController();
+    this.localMediaStream = new LocalMediaStream(self);
+    this.shooter = new Shooter();
     
     // Responsive grid
     $(window).bind('resize', function() { self.gridController.Resize(); });
     
     // Show the local player's game board
-    self.LocalGameBoard();
+    this.LocalGameBoard();
     
     // Show an invite screen, unless already in a lobby
     if (!PeerHandler.connection) {
@@ -40,7 +40,7 @@ var Game = function() {
     
     // Peer connection
     if (PeerHandler.connection) {
-        self.PeerHandlers();
+        this.PeerHandlers();
         Shooter.prototype.SetUsersTurn(false);
     }
     PeerHandler.peer.on('connection', function(connection) {
@@ -138,7 +138,7 @@ Game.prototype = {
             PeerHandler.Local.UpdateState(PeerHandler.Local.state);
         
         // Accept video call
-        self.VideoCall();
+        this.VideoCall();
         PeerHandler.peer.on('call', function(call) {
             PeerHandler.call = call;
             PeerHandler.call.answer();
@@ -153,7 +153,7 @@ Game.prototype = {
         PeerHandler.connection.on('error', function(error) { PeerHandler.Error(error); });
         
         // Show the game board?
-        self.RemoteGameBoard();
+        this.RemoteGameBoard();
     },
     
     // Show remote game board
@@ -177,7 +177,7 @@ Game.prototype = {
     // Video call
     VideoCall: function() {
         var self = this;
-        if (self.localMediaStream && PeerHandler.connection) {
+        if (this.localMediaStream && PeerHandler.connection) {
             Trace.Information('Sending media stream to remote peer...');
             PeerHandler.peer.call(PeerHandler.connection.peer, self.localMediaStream.stream);
         }

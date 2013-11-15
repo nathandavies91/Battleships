@@ -12,7 +12,7 @@ var LocalMediaStream = function(game) {
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (navigator.getUserMedia) {
         // Show hint
-        self.hint = new Hint('mediaallow', 'Allow camera and microphone for video communication');
+        this.hint = new Hint('mediaallow', 'Allow camera and microphone for video communication');
         
         // Browser is supported, request for the user's media
         navigator.getUserMedia({audio:true,video:true},

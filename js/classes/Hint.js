@@ -9,7 +9,7 @@ var Hint = function(id, content) {
     var self = this;
     
     // Show the hint
-    self.element = $(Mustache.render(HTML.div, {
+    this.element = $(Mustache.render(HTML.div, {
         id: id,
         class: 'hint',
         content: content
@@ -18,7 +18,7 @@ var Hint = function(id, content) {
     .insertAfter('h1');
     
     // Remove on click
-    self.element.on('click', function() {
+    this.element.on('click', function() {
         self.Remove();
     });
 }
