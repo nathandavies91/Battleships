@@ -217,6 +217,7 @@ h2 {
 .board #ready.disabled {
     background: grey;
     cursor: default;
+    opacity: .8;
 }
 
 .board .score, .board .video {
