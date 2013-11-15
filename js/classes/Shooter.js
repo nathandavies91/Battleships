@@ -15,16 +15,14 @@ var Shooter = function() {
 Shooter.prototype = {
     // Highlight
     Highlight: function(o) {
-        // Make sure both peers are ready, and it's the user's turn
-        if (PeerHandler.Remote.IsReady() && PeerHandler.Local.IsReady() && this.usersTurn)
-            o.addClass(this.aimClass);
+        if (this.Ready()) o.addClass(this.aimClass);
     },
     
     // Initiate
     Initiate: function() {
         var self = this;
         $('#remote .grid .block')
-            .unbind('shoot mouseover mouseout')
+            .unbind('click mouseover mouseout')
             .bind('click', function() { self.Shoot($(this)); })
             .bind('mouseover', function() { self.Highlight($(this)); })
             .bind('mouseout', function() { self.RemoveHighlighting($(this)); });
@@ -35,26 +33,37 @@ Shooter.prototype = {
         return this.usersTurn;
     },
     
+    // Ready?
+    Ready: function() {
+        // Make sure both peers are ready, and it's the user's turn
+        return (PeerHandler.Remote.IsReady() && PeerHandler.Local.IsReady() && this.usersTurn);
+    },
+    
     // Remove Highlighting
     RemoveHighlighting: function(o) {
         o.removeClass(this.aimClass);
     },
     
-    // Set user's turn
-    SetUsersTurn: function(state) {
-        this.usersTurn = state;
-    },
-    
     // Shoot
     Shoot: function(o) {
-        // Make sure both peers are ready, and it's the user's turn
-        if (PeerHandler.Remote.IsReady() && PeerHandler.Local.IsReady() && this.usersTurn) {
-            //
+        if (this.Ready()) {
+            // Send the missile
+            PeerHandler.connection.send({missile:{
+                x: o.index()+1,
+                y: o.parent().index()+1
+            }});
+            
+            // Switch users
+            this.ToggleUsersTurn();
         }
     },
     
     // Toggle user's turn
     ToggleUsersTurn: function() {
         this.usersTurn = !this.usersTurn;
+        
+        // Visualise
+        if (!this.usersTurn) $('body').addClass('theirgo');
+        else $('body').removeClass('theirgo');
     }
 }

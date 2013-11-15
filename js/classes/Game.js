@@ -51,6 +51,10 @@ var Game = function() {
         }
     });
     
+    // Give the host user priority
+    if (PeerHandler.connection)
+        this.shooter.ToggleUsersTurn();
+    
     // Responsive grid
     $(window).bind('resize', function() { self.gridController.Resize(); });
     
@@ -80,6 +84,8 @@ Game.prototype = {
         
         // Missile
         if (data.missile && !this.shooter.IsUsersTurn()) {
+            // MISSILE
+            
             // Toggle user's turn
             this.shooter.ToggleUsersTurn();
         }
