@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function Game() {
+var Game = function() {
     Trace.Information('New Game()');
     
     // Stop the loader

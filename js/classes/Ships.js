@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function Ship() { Trace.Information('New Ship()'); }
+var Ship = function() { Trace.Information('New Ship()'); }
 Ship.prototype = {
     name: 'Ship',
     class: 'ship',
@@ -31,7 +31,7 @@ Ship.prototype = {
  * AircraftCarrier
  */
 
-function AircraftCarrier() {
+var AircraftCarrier = function() {
     Trace.Information('New AircraftCarrier()');
     Ship.apply(this);
 }
@@ -51,7 +51,7 @@ AircraftCarrier.prototype = $.extend(
  * Battleship
  */
 
-function Battleship() {
+var Battleship = function() {
     Trace.Information('New Battleship()');
     Ship.apply(this);
 }
@@ -71,7 +71,7 @@ Battleship.prototype = $.extend(
  * Submarine
  */
 
-function Submarine() {
+var Submarine = function() {
     Trace.Information('New Submarine()');
     Ship.apply(this);
 }
@@ -91,7 +91,7 @@ Submarine.prototype = $.extend(
  * Destroyer
  */
 
-function Destroyer() {
+var Destroyer = function() {
     Trace.Information('New Destroyer()');
     Ship.apply(this);
 }
@@ -111,7 +111,7 @@ Destroyer.prototype = $.extend(
  * PatrolBoat
  */
 
-function PatrolBoat() {
+var PatrolBoat = function() {
     Trace.Information('New PatrolBoat()');
     Ship.apply(this);
 }

@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function GameBoard(o) {
+var GameBoard = function(o) {
     Trace.Information('New GameBoard('+o.id+')');
     
     // Grid

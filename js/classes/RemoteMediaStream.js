@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function RemoteMediaStream(stream) {
+var RemoteMediaStream = function(stream) {
     Trace.Information('New RemoteMediaStream('+stream+')');
     
     // Store the stream

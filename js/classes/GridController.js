@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function GridController() {
+var GridController = function() {
     Trace.Information('New GridController()');
 }
 

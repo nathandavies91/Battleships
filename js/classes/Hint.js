@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function Hint(id, content) {
+var Hint = function(id, content) {
     Trace.Information('New Hint('+id+', '+content+')');
     
     // Show the hint

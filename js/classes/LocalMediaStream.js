@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function LocalMediaStream() {
+var LocalMediaStream = function() {
     Trace.Information('New LocalMediaStream()');
     
     // Is the browser supported?

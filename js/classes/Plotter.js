@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-function Plotter() {
+var Plotter = function() {
     var ENTER_KEY = 32;
     
     Trace.Information('New Plotter()');
