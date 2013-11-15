@@ -10,7 +10,7 @@ var Utilities = {
         $(window).unbind('beforeunload');
         
         // Stop the user's stream
-        window.localStream.stop();
+        if (window.localStream) window.localStream.stop();
         
         // Remove game session
         $('body > *:not(h1)').remove();
