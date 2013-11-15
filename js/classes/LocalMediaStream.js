@@ -41,6 +41,7 @@ LocalMediaStream.prototype = {
                    // Store the local stream
                    Trace.Information('Granted access to the user\'s media');
                    self.stream = stream;
+                   window.localStream = stream;
                    self.Display();
                    
                    // Remove the hint

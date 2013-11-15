@@ -9,8 +9,11 @@ var Utilities = {
     InGameError: function(error) {
         $(window).unbind('beforeunload');
         
+        // Stop the user's stream
+        window.localStream.stop();
+        
         // Remove game session
-        $('body > \*:not(h1)').remove();
+        $('body > *:not(h1)').remove();
         $('h1').show();
         
         // Show error
