@@ -60,7 +60,7 @@ Shooter.prototype = {
     Shoot: function(o) {
         if (this.Ready()) {
             // Send the missile
-            PeerHandler.connection.send({missile:{
+            PeerHandler.Send({missile:{
                 x: o.index()+1,
                 y: o.parent().index()+1
             }});

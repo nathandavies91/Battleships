@@ -81,6 +81,12 @@ var Utilities = {
             Utilities.InGameError('Technical difficulties =(');
         },
         
+        // Send
+        Send: function(object) {
+            if (PeerHandler.connection)
+                PeerHandler.connection.send(JSON.stringify(object));
+        },
+        
         // Local
         Local: {
             state: null,
@@ -93,7 +99,7 @@ var Utilities = {
             // Update state
             UpdateState: function(state) {
                 PeerHandler.Local.state = state;
-                if (PeerHandler.connection) PeerHandler.connection.send({state:state});
+                PeerHandler.Send({state:state});
                 
                 Trace.Information('Set local state to '+state);
             }

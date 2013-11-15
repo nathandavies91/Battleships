@@ -42,6 +42,8 @@ jQuery(function($) {
                 // Open the game
                 PeerHandler.connection.on('open', function() {
                     PeerHandler.connection.on('data', function(data) {
+                        data = $.parseJSON(data);
+                        
                         if (data.state == 'initiation')
                             new Game();
                         else if (data.state == 'gameisfull')

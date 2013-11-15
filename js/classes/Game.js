@@ -37,7 +37,7 @@ var Game = function() {
             // Open the connection and show the remote game board
             PeerHandler.connection.on('open', function() {
                 Trace.Information('Peer has connected: '+PeerHandler.connection.peer);
-                connection.send({state:'initiation'});
+                PeerHandler.Send({state:'initiation'});
                 
                 self.PeerHandlers();
             });
@@ -46,7 +46,7 @@ var Game = function() {
             // Notify the peer that this game is full
             Trace.Information(connection.peer+' was rejected as game is full');
             connection.on('open', function() {
-                connection.send({state:'gameisfull'});
+                connection.send(JSON.stringify({state:'gameisfull'}));
             });
         }
     });
@@ -77,7 +77,7 @@ Game.prototype = {
             
             // Update the grid, and peer
             o.addClass(missileClass);
-            PeerHandler.connection.send({result:missileClass,coordinates:coordinates});
+            PeerHandler.Send({result:missileClass,coordinates:coordinates});
             
             // Toggle user
             this.shooter.ToggleUsersTurn();
@@ -86,6 +86,9 @@ Game.prototype = {
     
     // Handle data
     HandleData: function(data) {
+        // Parse data
+        data = $.parseJSON(data);
+        
         // State change
         if (data.state) {
             PeerHandler.Remote.UpdateState(data.state);
@@ -198,7 +201,7 @@ Game.prototype = {
     // Video call
     VideoCall: function() {
         var self = this;
-        if (this.localMediaStream && PeerHandler.connection) {
+        if (this.localMediaStream.stream && PeerHandler.connection) {
             Trace.Information('Sending media stream to remote peer...');
             PeerHandler.peer.call(PeerHandler.connection.peer, self.localMediaStream.stream);
         }
