@@ -74,11 +74,6 @@ Game.prototype = {
     remoteGameScore: 0,
     remoteMediaStream: null,
     
-    // Is ready?
-    IsReady: function() {
-        return (this.plotter) ? this.plotter.IsReady() : false;
-    },
-    
     // Show local game board
     LocalGameBoard: function() {
         // Hide the heading
