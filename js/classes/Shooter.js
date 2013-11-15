@@ -58,7 +58,7 @@ Shooter.prototype = {
     
     // Shoot
     Shoot: function(o) {
-        if (this.Ready()) {
+        if (this.Ready() && !o.hasClass('miss') && !o.hasClass('hit')) {
             // Send the missile
             PeerHandler.Send({missile:{
                 x: o.index()+1,
