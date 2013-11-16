@@ -98,6 +98,9 @@ Game.prototype = {
         var self = this,
             ships = new Array();
         
+        // Hide the turn identifier
+        $('#turn').hide();
+        
         // Update state
         PeerHandler.Local.UpdateState(state);
         
@@ -247,6 +250,9 @@ Game.prototype = {
     
     // Show remote game board
     RemoteGameBoard: function() {
+        // Who's turn is it?
+        this.TurnIdentifier();
+        
         // Stream properties
         var properties;
         if (this.remoteMediaStream)
@@ -277,6 +283,15 @@ Game.prototype = {
                 $('#invitelink .copy').html('Copied');
             }
         });
+    },
+    
+    // Who's turn is it?
+    TurnIdentifier: function() {
+        var turn = $('#turn');
+        if (!turn.length)
+            $('body').append(Mustache.render(HTML.TurnIdentifier()));
+        else
+            turn.show();
     },
     
     // Video call

@@ -69,5 +69,16 @@ var HTML = {
         template +=     '</section>';
         template += '</section>';
         return template;
+    },
+    
+    // Turn identifier
+    TurnIdentifier: function() {
+        var template = '';
+        template += '<div id="turn">';
+        template +=     '<div class="background left"></div>';
+        template +=     '<div class="background right"></div>';
+        template +=     '<div class="pointer"></div>';
+        template += '</div>';
+        return template;
     }
 }
