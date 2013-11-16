@@ -5,45 +5,50 @@
  */
 
 var Plotter = function() {
-    Trace.Information('New Plotter()');
-    var self = this;
-    
-    // Constants
-    var ENTER_KEY = 32;
-    
-    // Properties
-    this.blockClass = '#local .grid .block';
-    this.gridClass = '#local .grid';
-    this.highlightClass = 'highlight';
-    this.readyId = '#ready';
-    this.shipClass = 'ship';
-    this.vertical = true;
-    
-    // Ships
-    this.Ships = {
-        aircraftCarrier: new AircraftCarrier(),
-        battleship: new Battleship(),
-        submarine: new Submarine(),
-        destroyer: new Destroyer(),
-        patrolBoat: new PatrolBoat()
+    if (PeerHandler.Local.IsPlotting() && !$('body').hasClass('plotting')) {
+        Trace.Information('New Plotter()');
+        var self = this;
+        
+        // Constants
+        var ENTER_KEY = 32;
+        
+        // Properties
+        this.blockClass = '#local .grid .block';
+        this.gridClass = '#local .grid';
+        this.highlightClass = 'highlight';
+        this.readyId = '#ready';
+        this.shipClass = 'ship';
+        this.vertical = true;
+        
+        // Ships
+        this.Ships = {
+            aircraftCarrier: new AircraftCarrier(),
+            battleship: new Battleship(),
+            submarine: new Submarine(),
+            destroyer: new Destroyer(),
+            patrolBoat: new PatrolBoat()
+        }
+        
+        // Plotting class
+        $('body').addClass('plotting');
+        
+        // Highlight ship plot area
+        $(this.blockClass).bind('mouseover', function() { self.Highlight($(this)); });
+        
+        // Clean up the highlighting
+        $(this.blockClass).bind('mouseout', function() { self.RemoveHighlighting(); });
+        
+        // Place ship
+        $(this.blockClass).bind('click', function() { self.PlaceShip($(this)); });
+        
+        // Change orientation state when space bar has been pressed
+        $('body').bind('keyup', function(e) {
+            if (e.keyCode == ENTER_KEY) self.ChangeOrientation();
+        });
+        
+        // A bit of OCD
+        $(this.gridClass).bind('mouseout', function() { self.RemoveFocus(); });
     }
-    
-    // Highlight ship plot area
-    $(this.blockClass).bind('mouseover', function() { self.Highlight($(this)); });
-    
-    // Clean up the highlighting
-    $(this.blockClass).bind('mouseout', function() { self.RemoveHighlighting(); });
-    
-    // Place ship
-    $(this.blockClass).bind('click', function() { self.PlaceShip($(this)); });
-    
-    // Change orientation state when space bar has been pressed
-    $('body').bind('keyup', function(e) {
-        if (e.keyCode == ENTER_KEY) self.ChangeOrientation();
-    });
-    
-    // A bit of OCD
-    $(this.gridClass).bind('mouseout', function() { self.RemoveFocus(); });
 }
 
 Plotter.prototype = {
@@ -78,7 +83,8 @@ Plotter.prototype = {
         // Correct cursor
         $('#local .grid .ship').css('cursor', 'default');
         
-        // Remove elements
+        // Tidy up
+        $('body').removeClass('plotting');
         $(this.readyId+',#local .instructions').remove();
         
         // Update state
