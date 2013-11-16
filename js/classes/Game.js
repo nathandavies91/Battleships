@@ -80,7 +80,7 @@ Game.prototype = {
             
             // I hope the user is alright; lets just check to make sure they are not dead
             if (!$('.ship:not(.hit)').length) {
-                this.GameOverview('lost');
+                this.GameOver('lost');
                 result = 'dead';
             }
             
@@ -93,7 +93,7 @@ Game.prototype = {
     },
     
     // Game overview
-    GameOverview: function(state) {
+    GameOver: function(state) {
         Trace.Information('Game over: local peer '+state);
         var self = this;
         
@@ -163,7 +163,7 @@ Game.prototype = {
         if (data.result) {
             // Is it game over?
             if (data.result == 'dead') {
-                this.GameOverview('won');
+                this.GameOver('won');
                 data.result = 'hit';
             }
             
