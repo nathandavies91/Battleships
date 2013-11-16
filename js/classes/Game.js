@@ -95,6 +95,7 @@ Game.prototype = {
     // Game overview
     GameOverview: function(state) {
         Trace.Information('Game over: local peer '+state);
+        var self = this;
         
         // Update state
         PeerHandler.Local.UpdateState(state);
@@ -121,7 +122,13 @@ Game.prototype = {
         });
         
         // New round?
-        //
+        $('#playagain').bind('click', function() {
+            $(this).unbind('click').html('Waiting...');
+            
+            // Update peer state and request a new round
+            PeerHandler.Local.UpdateState('playagain');
+            self.NewRound();
+        });
     },
     
     // Handle data
@@ -132,6 +139,10 @@ Game.prototype = {
         // State change
         if (data.state) {
             PeerHandler.Remote.UpdateState(data.state);
+            
+            // Play again request
+            if (PeerHandler.Remote.state == 'playagain')
+                this.NewRound();
             
             // If the remote peer is ready
             if (PeerHandler.Remote.IsReady()) {
@@ -182,6 +193,15 @@ Game.prototype = {
         
         // Update the local state
         PeerHandler.Local.UpdateState('plotting');
+    },
+    
+    // New round
+    NewRound: function() {
+        // Play again?
+        if (PeerHandler.Local.state == 'playagain' && PeerHandler.Remote.state == 'playagain') {
+            this.LocalGameBoard();
+            this.RemoteGameBoard();
+        }
     },
     
     // Peer handlers
