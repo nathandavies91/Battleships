@@ -19,6 +19,15 @@ var Plotter = function() {
     this.shipClass = 'ship';
     this.vertical = true;
     
+    // Ships
+    this.Ships = {
+        aircraftCarrier: new AircraftCarrier(),
+        battleship: new Battleship(),
+        submarine: new Submarine(),
+        destroyer: new Destroyer(),
+        patrolBoat: new PatrolBoat()
+    }
+    
     // Highlight ship plot area
     $(this.blockClass).bind('mouseover', function() { self.Highlight($(this)); });
     
@@ -225,36 +234,7 @@ Plotter.prototype = {
     
     // Selected ship
     SelectedShip: function() {
-        var ship,
-            Ships = this.Ships;
-        
-        // Aircraft carrier
-        if (!(ship = Ships.aircraftCarrier)) return this.Ships.aircraftCarrier = new AircraftCarrier();
-        else if (!ship.Plotted()) return ship;
-        
-        // Battleship
-        if (!(ship = Ships.battleship)) return this.Ships.battleship = new Battleship();
-        else if (!ship.Plotted()) return ship;
-        
-        // Submarine
-        if (!(ship = Ships.submarine)) return this.Ships.submarine = new Submarine();
-        else if (!ship.Plotted()) return ship;
-        
-        // Destroyer
-        if (!(ship = Ships.destoyer)) return this.Ships.destoyer = new Destroyer();
-        else if (!ship.Plotted()) return ship;
-        
-        // Patrol boat
-        if (!(ship = Ships.patrolBoat)) return this.Ships.patrolBoat = new PatrolBoat();
-        else if (!ship.Plotted()) return ship;
-    },
-    
-    // Ships
-    Ships: {
-        aircraftCarrier: null,
-        battleship: null,
-        submarine: null,
-        destoyer: null,
-        patrolBoat: null
+        for (var ship in this.Ships)
+            if (!this.Ships[ship].Plotted()) return this.Ships[ship];
     }
 }
