@@ -307,7 +307,7 @@ h2 {
 }
 
 /* Ships */
-.board .grid .row .block.highlight, .board .grid .row .block.ship {
+.board .grid .row .block.highlight, .board .grid .row .block.ship, .board .grid .row .block.reveal {
     background: rgba(0, 0, 0, .2);
     cursor: pointer;
 }

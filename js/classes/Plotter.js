@@ -238,6 +238,12 @@ Plotter.prototype = {
         this.DisableReady();
     },
     
+    // Reveal
+    Reveal: function(data) {
+        for (var i in data)
+            $('#remote .grid .row:nth-child('+data[i].y+') .block:nth-child('+data[i].x+')').addClass('reveal');
+    },
+    
     // Selected ship
     SelectedShip: function() {
         for (var ship in this.Ships)

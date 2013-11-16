@@ -95,7 +95,8 @@ Game.prototype = {
     // Game overview
     GameOver: function(state) {
         Trace.Information('Game over: local peer '+state);
-        var self = this;
+        var self = this,
+            ships = new Array();
         
         // Update state
         PeerHandler.Local.UpdateState(state);
@@ -120,6 +121,15 @@ Game.prototype = {
                 won: (state == 'won')
             }));
         });
+        
+        // Reveal ships to the peer
+        $('.ship:not(.hit)').each(function() {
+            ships[ships.length] = {
+                x: $(this).index()+1,
+                y: $(this).parent().index()+1
+            };
+        });
+        if (ships.length) PeerHandler.Send({reveal:ships});
         
         // New round?
         $('#playagain').bind('click', function() {
@@ -169,6 +179,10 @@ Game.prototype = {
             
             this.shooter.Result(data);
         }
+        
+        // Reveal
+        if (data.reveal)
+            this.plotter.Reveal(data.reveal);
     },
     
     // Show local game board
