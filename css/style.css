@@ -226,18 +226,21 @@ h2 {
     line-height: 30px;
     padding: 10px;
 }
+.board #playagain {
+    box-shadow: 0 0 .4em #333;
+}
 
 .board #ready {
     display: block;
     left: 389px;
     position: absolute;
     top: 105px;
+    transition: all .3s;
 }
 .board #ready.disabled {
     background: grey;
     cursor: default;
     opacity: .8;
-    transition: all .3s;
 }
 
 .board .score, .board .video {
