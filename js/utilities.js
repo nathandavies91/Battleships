@@ -91,6 +91,11 @@ var Utilities = {
         Local: {
             state: null,
             
+            // Plotting?
+            IsPlotting: function() {
+                return (this.state == 'plotting');
+            },
+            
             // Ready?
             IsReady: function() {
                 return (this.state == 'ready');
@@ -108,6 +113,11 @@ var Utilities = {
         // Remote
         Remote: {
             state: null,
+            
+            // Plotting?
+            IsPlotting: function() {
+                return (this.state == 'plotting');
+            },
             
             // Ready?
             IsReady: function() {

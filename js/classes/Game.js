@@ -176,6 +176,9 @@ Game.prototype = {
         // Hide the heading
         $('h1').hide();
         
+        // Update peer state
+        PeerHandler.Local.UpdateState('plotting');
+        
         // Stream properties
         var properties;
         if (this.localMediaStream)
@@ -190,7 +193,6 @@ Game.prototype = {
         
         // Plot ships
         this.plotter = new Plotter();
-        PeerHandler.Local.UpdateState('plotting');
     },
     
     // New round

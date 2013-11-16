@@ -6,7 +6,7 @@
 
 var GameBoard = function(o) {
     Trace.Information('New GameBoard('+o.id+')');
-    if (o.id == 'local' || o.id == 'remote') {
+    if ((o.id == 'local' && PeerHandler.Local.IsPlotting()) || (o.id == 'remote')) {
         // Properties
         this.options = o;
         
@@ -21,7 +21,7 @@ GameBoard.prototype = {
         $('#'+this.options.id).remove();
         $('body').append(Mustache.render(HTML.GameBoard(), $.extend({
             grid: this.Grid(),
-            local: (this.options.id == 'local') ? true : false
+            local: (this.options.id == 'local')
         },this.options)));
     },
     
