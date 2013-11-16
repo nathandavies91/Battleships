@@ -190,8 +190,6 @@ Game.prototype = {
         
         // Plot ships
         this.plotter = new Plotter();
-        
-        // Update the local state
         PeerHandler.Local.UpdateState('plotting');
     },
     
