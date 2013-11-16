@@ -227,7 +227,7 @@ h2 {
     padding: 10px;
 }
 .board #playagain {
-    box-shadow: 0 0 .4em #333;
+    box-shadow: 0 0 .2em #444;
 }
 
 .board #ready {
