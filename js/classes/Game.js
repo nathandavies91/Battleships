@@ -81,8 +81,10 @@ Game.prototype = {
             
             // You sunk my battleship! Maybe..
             if (ship) {
-                if ((ship.size - ship.damage) <= 0)
+                if ((ship.size - ship.damage) <= 0) {
+                    Trace.Information(ship.name+' has been destroyed');
                     var shipDestroyed = true;
+                }
             }
             
             // I hope the user is alright; lets just check to make sure they are not dead

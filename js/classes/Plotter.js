@@ -77,6 +77,8 @@ Plotter.prototype = {
             for (var i in this.Ships[ship].plot) {
                 if (this.Ships[ship].plot[i].index()+1 == segment.x &&
                    this.Ships[ship].plot[i].parent().index()+1 == segment.y) {
+                    Trace.Information(this.Ships[ship].name+' has been hit');
+                    
                     // Inflict damage, and return the ship
                     this.Ships[ship].damage++;
                     return this.Ships[ship];
