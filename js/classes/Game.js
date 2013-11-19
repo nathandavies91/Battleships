@@ -65,56 +65,6 @@ var Game = function() {
 }
 
 Game.prototype = {
-    // Enemy missile
-    EnemyMissile: function(coordinates) {
-        if (!this.shooter.IsUsersTurn()) {
-            var o = $('#local .grid .row:nth-child('+coordinates.y+') .block:nth-child('+coordinates.x+')'),
-                result,
-                ship;
-            
-            // Did the missile hit something important? Or just sink into the sea?
-            if (ship = this.plotter.EnemyMissile(coordinates)) result = 'hit';
-            else result = 'miss';
-            
-            // Update the grid
-            o.addClass(result);
-            
-            // You sunk my battleship! Maybe..
-            if (ship) {
-                if ((ship.size - ship.damage) <= 0) {
-                    Trace.Information(ship.name+' has been destroyed');
-                    var shipDestroyed = true;
-                }
-            }
-            
-            // I hope the user is alright; lets just check to make sure they are not dead
-            if (result == 'hit') {
-                var gameOver = true,
-                    ships = this.plotter.Ships;
-                
-                // Check to see if any ships have life
-                for (var i in ships) {
-                    if ((ships[i].size - ships[i].damage) > 0) {
-                        gameOver = false;
-                        break;
-                    }
-                }
-                
-                // Game over?
-                if (gameOver) {
-                    this.GameOver('lost');
-                    result = 'dead';
-                }
-            }
-            
-            // Update the peer
-            PeerHandler.Send({result:result,coordinates:coordinates,shipDestroyed:(shipDestroyed)});
-            
-            // Toggle user
-            this.shooter.ToggleUsersTurn();
-        }
-    },
-    
     // Game overview
     GameOver: function(state) {
         Trace.Information('Game over: local peer '+state);
@@ -193,7 +143,7 @@ Game.prototype = {
         
         // Missile
         if (data.missile && !this.shooter.IsUsersTurn())
-            this.EnemyMissile(data.missile);
+            this.plotter.EnemyMissile(this, data.missile);
         
         // Missile result
         if (data.result) {
@@ -201,6 +151,11 @@ Game.prototype = {
             if (data.result == 'dead') {
                 this.GameOver('won');
                 data.result = 'hit';
+            }
+            
+            // Sunk their battleship?
+            if (data.shipDestroyed) {
+                // SOON
             }
             
             this.shooter.Result(data);

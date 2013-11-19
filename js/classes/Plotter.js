@@ -71,19 +71,57 @@ Plotter.prototype = {
         });
     },
     
-    // Enemy Missile
-    EnemyMissile: function(segment) {
-        for (var ship in this.Ships) {
-            for (var i in this.Ships[ship].plot) {
-                if (this.Ships[ship].plot[i].index()+1 == segment.x &&
-                   this.Ships[ship].plot[i].parent().index()+1 == segment.y) {
-                    Trace.Information(this.Ships[ship].name+' has been hit');
-                    
-                    // Inflict damage, and return the ship
-                    this.Ships[ship].damage++;
-                    return this.Ships[ship];
+    // Enemy missile
+    EnemyMissile: function(game, coordinates) {
+        if (!game.shooter.IsUsersTurn()) {
+            var o = $('#local .grid .row:nth-child('+coordinates.y+') .block:nth-child('+coordinates.x+')'),
+                result,
+                ship;
+            
+            // Did the missile hit something important? Or just sink into the sea?
+            if (ship = this.IsShip(coordinates)) result = 'hit';
+            else result = 'miss';
+            
+            // Update the grid
+            o.addClass(result);
+            
+            // You sunk my battleship! Maybe..
+            if (ship) {
+                if ((ship.size - ship.damage) <= 0) {
+                    Trace.Information(ship.name+' has been destroyed');
+                    var shipDestroyed = true;
                 }
             }
+            
+            // I hope the user is alright; lets just check to make sure they are not dead
+            if (result == 'hit') {
+                var gameOver = true,
+                    ships = this.Ships;
+                
+                // Check to see if any ships have life
+                for (var i in ships) {
+                    if ((ships[i].size - ships[i].damage) > 0) {
+                        gameOver = false;
+                        break;
+                    }
+                }
+                
+                // Game over?
+                if (gameOver) {
+                    game.GameOver('lost');
+                    result = 'dead';
+                }
+            }
+            
+            // Update the peer
+            PeerHandler.Send({
+                result: result,
+                coordinates: coordinates,
+                shipDestroyed: (shipDestroyed) ? ship.name : null
+            });
+            
+            // Toggle user
+            game.shooter.ToggleUsersTurn();
         }
     },
     
@@ -160,6 +198,22 @@ Plotter.prototype = {
         }
         if (o)
             this.focus = o;
+    },
+    
+    // Is Ship
+    IsShip: function(segment) {
+        for (var ship in this.Ships) {
+            for (var i in this.Ships[ship].plot) {
+                if (this.Ships[ship].plot[i].index()+1 == segment.x &&
+                   this.Ships[ship].plot[i].parent().index()+1 == segment.y) {
+                    Trace.Information(this.Ships[ship].name+' has been hit');
+                    
+                    // Inflict damage, and return the ship
+                    this.Ships[ship].damage++;
+                    return this.Ships[ship];
+                }
+            }
+        }
     },
     
     // Place ship
