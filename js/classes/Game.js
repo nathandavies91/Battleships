@@ -80,11 +80,11 @@ Game.prototype = {
         // Update the score
         if (state == 'won') {
             this.localGameScore++;
-            $('#local .score span:not(.title)').html(this.localGameScore);
+            $('#local .score > figure').html(this.localGameScore);
         }
         else {
             this.remoteGameScore++;
-            $('#remote .score span:not(.title)').html(this.remoteGameScore);
+            $('#remote .score > figure').html(this.remoteGameScore);
         }
         
         // Fade out
