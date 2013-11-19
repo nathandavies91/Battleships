@@ -14,7 +14,10 @@ var HTML = {
         template +=     '<section class="video">';
         template +=         '<video{{#stream}} src="{{stream}}"{{/stream}} autoplay{{#muted}} muted{{/muted}}></video>';
         template +=     '</section>';
-        template +=     '<section class="score"><span class="title">Score</span><span>{{score}}</span></section>';
+        template +=     '<section class="score">';
+        template +=         '<span class="title">Score</span><span>{{score}}</span>';
+        template +=         '<div class="shipcount"><span>Ships:</span><figure>0</figure></div>';
+        template +=     '</section>';
         template +=     '{{#local}}';
         template +=         '<section class="instructions">';
         template +=             '<h2>Plotting Ships</h2>';

@@ -164,6 +164,10 @@ Game.prototype = {
         // Reveal
         if (data.reveal)
             this.plotter.Reveal(data.reveal);
+        
+        // Ship count
+        if (!isNaN(data.shipCount))
+            $('#remote .shipcount figure').html(data.shipCount);
     },
     
     // Show local game board
@@ -204,6 +208,7 @@ Game.prototype = {
         var self = this;
         
         // Let remote peer know what state the local peer is in
+        this.plotter.ShipCount();
         if (PeerHandler.Local.state)
             PeerHandler.Local.UpdateState(PeerHandler.Local.state);
         

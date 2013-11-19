@@ -198,28 +198,25 @@ h2 {
     height: 433px;
     left: 50%;
     margin: -135px 0 0 -216px;
-    overflow: hidden;
     position: absolute;
     top: 50%;
     width: 433px;
 }
 
 .board .grid .row {
+    border-bottom: 1px dashed #9AE2E2;
+    border-right: 1px dashed #9AE2E2;
     line-height: 0;
+}
+.board .grid .row:first-child {
+    border-top: 1px dashed #9AE2E2;
 }
 
 .board .grid .row .block {
     border-left: 1px dashed #9AE2E2;
-    border-top: 1px dashed #9AE2E2;
     display: inline-block;
     height: 42px;
     width: 42px;
-}
-.board .grid .row .block:last-child {
-    border-right: 1px dashed #9AE2E2;
-}
-.board .grid .row:last-child .block {
-    border-bottom: 1px dashed #9AE2E2;
 }
 
 .board .instructions {
@@ -295,19 +292,42 @@ h2 {
     float: left;
     font-size: 6em;
     height: 161px;
-    line-height: 161px;
+    line-height: 138px;
     overflow: hidden;
     position: relative;
     text-align: center;
     width: 161px;
 }
+.board .score:hover span.title {
+    opacity: .8;
+}
 .board .score span.title {
     font-size: .15em;
     left: 6px;
     line-height: 1em;
-    opacity: .9;
+    opacity: 0;
     position: absolute;
     top: 6px;
+    transition: all .3s;
+}
+
+.board .shipcount {
+    bottom: 22px;
+    font-size: .15em;
+    height: 20px;
+    left: 0;
+    line-height: 20px;
+    opacity: .7;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+.board .shipcount > * {
+    display: inline;
+}
+.board .shipcount figure {
+    margin-left: 3px;
 }
 
 .board .video {

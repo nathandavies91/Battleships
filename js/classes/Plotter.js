@@ -90,6 +90,7 @@ Plotter.prototype = {
                 if ((ship.size - ship.damage) <= 0) {
                     Trace.Information(ship.name+' has been destroyed');
                     var shipDestroyed = true;
+                    this.ShipCount();
                 }
             }
             
@@ -251,6 +252,9 @@ Plotter.prototype = {
                 
                 // Re-highlight
                 this.Rehighlight(focus);
+                
+                // Update ship count
+                this.ShipCount();
             }
         }
         
@@ -297,6 +301,9 @@ Plotter.prototype = {
                 Ships[ship].Remove();
                 Trace.Information('Removed ship '+Ships[ship].name);
                 
+                // Update ship count
+                this.ShipCount();
+                
                 break;
             }
         }
@@ -318,5 +325,21 @@ Plotter.prototype = {
     SelectedShip: function() {
         for (var ship in this.Ships)
             if (!this.Ships[ship].Plotted()) return this.Ships[ship];
+    },
+    
+    // Ship count
+    ShipCount: function() {
+        var count = 0,
+            ship;
+        
+        // Count those ships that have life, and have been plotted.
+        for (ship in this.Ships) {
+            if (((this.Ships[ship].size - this.Ships[ship].damage) > 0) && this.Ships[ship].Plotted())
+                count++;
+        }
+        
+        // Update ship count
+        $('#local .shipcount figure').html(count);
+        PeerHandler.Send({shipCount:count});
     }
 }
