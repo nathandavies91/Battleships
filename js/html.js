@@ -20,7 +20,7 @@ var HTML = {
         template +=     '</section>';
         template +=     '{{#local}}';
         template +=         '<section class="instructions">';
-        template +=             '<h2>Plotting Ships</h2>';
+        template +=             '<h2>Instructions</h2>';
         template +=             '<ul>';
         template +=                 '<li>Use the space-bar key to adjust the orientation</li>';
         template +=                 '<li>Double click a ship to remove it</li>';
