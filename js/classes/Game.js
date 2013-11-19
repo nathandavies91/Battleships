@@ -17,7 +17,7 @@ var Game = function() {
     
     // Required resources
     this.gridController = new GridController();
-    this.localMediaStream = new LocalMediaStream(self);
+    this.localMediaStream = new LocalMediaStream();
     this.shooter = new Shooter();
     
     // Show the local player's game board
@@ -230,7 +230,7 @@ Game.prototype = {
             PeerHandler.Local.UpdateState(PeerHandler.Local.state);
         
         // Accept video call
-        this.VideoCall();
+        this.localMediaStream.VideoCall();
         PeerHandler.peer.on('call', function(call) {
             PeerHandler.call = call;
             PeerHandler.call.answer();
@@ -292,14 +292,5 @@ Game.prototype = {
             $('body').append(Mustache.render(HTML.TurnIdentifier()));
         else
             turn.show();
-    },
-    
-    // Video call
-    VideoCall: function() {
-        var self = this;
-        if (this.localMediaStream.stream && PeerHandler.connection) {
-            Trace.Information('Sending media stream to remote peer...');
-            PeerHandler.peer.call(PeerHandler.connection.peer, self.localMediaStream.stream);
-        }
     }
 }

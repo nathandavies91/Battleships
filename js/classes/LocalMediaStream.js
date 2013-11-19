@@ -4,7 +4,7 @@
  * Author & Copyright (c) 2013: Nathan Davies, www.nathandavies.co.uk
  */
 
-var LocalMediaStream = function(game) {
+var LocalMediaStream = function() {
     Trace.Information('New LocalMediaStream()');
     
     // Properties
@@ -48,7 +48,7 @@ LocalMediaStream.prototype = {
                    self.hint.Remove();
                    
                    // Video call
-                   self.game.VideoCall();
+                   self.VideoCall();
                },
                function(error) {
                    // Damn! Oh well, just give the user a smiley face
@@ -56,6 +56,15 @@ LocalMediaStream.prototype = {
                    self.hint.Remove();
                }
            );
+        }
+    },
+    
+    // Video call
+    VideoCall: function() {
+        var self = this;
+        if (this.stream && PeerHandler.connection) {
+            Trace.Information('Sending media stream to remote peer...');
+            PeerHandler.peer.call(PeerHandler.connection.peer, self.stream);
         }
     }
 }
