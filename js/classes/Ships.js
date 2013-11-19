@@ -10,6 +10,7 @@ var Ship = function() {
     this.name = 'Ship';
     this.class = 'ship';
     this.size = 0;
+    this.damage = 0;
 }
 
 Ship.prototype = {

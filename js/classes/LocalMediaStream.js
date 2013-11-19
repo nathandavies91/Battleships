@@ -8,7 +8,6 @@ var LocalMediaStream = function() {
     Trace.Information('New LocalMediaStream()');
     
     // Properties
-    this.game = game;
     this.stream = null;
     
     // Request the user's stream

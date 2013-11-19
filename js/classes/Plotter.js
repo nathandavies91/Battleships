@@ -71,6 +71,20 @@ Plotter.prototype = {
         });
     },
     
+    // Enemy Missile
+    EnemyMissile: function(segment) {
+        for (var ship in this.Ships) {
+            for (var i in this.Ships[ship].plot) {
+                if (this.Ships[ship].plot[i].index()+1 == segment.x &&
+                   this.Ships[ship].plot[i].parent().index()+1 == segment.y) {
+                    // Inflict damage, and return the ship
+                    this.Ships[ship].damage++;
+                    return this.Ships[ship];
+                }
+            }
+        }
+    },
+    
     // Finish plotting
     FinishPlotting: function() {
         // Unbind all the plotting events

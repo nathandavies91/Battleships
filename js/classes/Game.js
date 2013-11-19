@@ -69,23 +69,44 @@ Game.prototype = {
     EnemyMissile: function(coordinates) {
         if (!this.shooter.IsUsersTurn()) {
             var o = $('#local .grid .row:nth-child('+coordinates.y+') .block:nth-child('+coordinates.x+')'),
-                result;
+                result,
+                ship;
             
-            // Contact? Or did the missile just sink into the sea
-            if (o.is('.ship')) result = 'hit';
+            // Did the missile hit something important? Or just sink into the sea?
+            if (ship = this.plotter.EnemyMissile(coordinates)) result = 'hit';
             else result = 'miss';
             
             // Update the grid
             o.addClass(result);
             
+            // You sunk my battleship! Maybe..
+            if (ship) {
+                if ((ship.size - ship.damage) <= 0)
+                    var shipDestroyed = true;
+            }
+            
             // I hope the user is alright; lets just check to make sure they are not dead
-            if (!$('.ship:not(.hit)').length) {
-                this.GameOver('lost');
-                result = 'dead';
+            if (result == 'hit') {
+                var gameOver = true,
+                    ships = this.plotter.Ships;
+                
+                // Check to see if any ships have life
+                for (var i in ships) {
+                    if ((ships[i].size - ships[i].damage) > 0) {
+                        gameOver = false;
+                        break;
+                    }
+                }
+                
+                // Game over?
+                if (gameOver) {
+                    this.GameOver('lost');
+                    result = 'dead';
+                }
             }
             
             // Update the peer
-            PeerHandler.Send({result:result,coordinates:coordinates});
+            PeerHandler.Send({result:result,coordinates:coordinates,shipDestroyed:(shipDestroyed)});
             
             // Toggle user
             this.shooter.ToggleUsersTurn();
