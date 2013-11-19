@@ -37,7 +37,7 @@ Shooter.prototype = {
     // Ready?
     Ready: function() {
         // Make sure both peers are ready, and it's the user's turn
-        return (PeerHandler.Remote.IsReady() && PeerHandler.Local.IsReady() && this.usersTurn);
+        return (PeerHandler.Remote.IsReady() && PeerHandler.Local.IsReady() && this.IsUsersTurn());
     },
     
     // Remove Highlighting
