@@ -30,7 +30,7 @@ jQuery(function($) {
         Loader.Start();
         
         // Peers
-        PeerHandler.peer = new Peer({host:'peer.nathandavies.ninja'});
+        PeerHandler.peer = new Peer({host:'peer.nathandavies.ninja', port: 80});
         PeerHandler.peer.on('open', function(id) {
             Trace.Information('Local peer identifier: '+id);
             
