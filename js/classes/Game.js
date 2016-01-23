@@ -5,7 +5,7 @@
  */
 
 var Game = function() {
-    Trace.Information('New Game()');
+	Trace.Information('New Game()');
     var self = this;
     
     // Stop the loader
