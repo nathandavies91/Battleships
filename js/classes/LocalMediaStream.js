@@ -6,10 +6,10 @@
 
 var LocalMediaStream = function() {
     Trace.Information('New LocalMediaStream()');
-    
+
     // Properties
     this.stream = null;
-    
+
     // Request the user's stream
     this.RequestStream();
 }
@@ -19,12 +19,13 @@ LocalMediaStream.prototype = {
     Display: function() {
         $('#local video').attr('src', this.ObjectURL());
     },
-    
+
     // Object URL
     ObjectURL: function() {
-        return window.URL.createObjectURL(this.stream);
+        var blob = []; blob.push(this.stream);
+        return window.URL.createObjectURL(new Blob(blob));
     },
-    
+
     // Request stream
     RequestStream: function() {
         // Is the browser supported?
@@ -33,7 +34,7 @@ LocalMediaStream.prototype = {
         if (navigator.getUserMedia) {
             // Show hint
             this.hint = new Hint('mediaallow', 'Allow camera and microphone for video communication');
-            
+
             // Browser is supported, request for the user's media
             navigator.getUserMedia({audio:true,video:true},
                function(stream) {
@@ -42,10 +43,10 @@ LocalMediaStream.prototype = {
                    window.localStream = stream;
                    self.stream = stream;
                    self.Display();
-                   
+
                    // Remove the hint
                    self.hint.Remove();
-                   
+
                    // Video call
                    self.VideoCall();
                },
@@ -57,7 +58,7 @@ LocalMediaStream.prototype = {
            );
         }
     },
-    
+
     // Video call
     VideoCall: function() {
         var self = this;
